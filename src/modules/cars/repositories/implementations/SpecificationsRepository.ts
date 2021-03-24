@@ -7,20 +7,8 @@ import { ISpecificationsRepository } from '../ISpecificationsRepository'
 class SpecificationsRepository implements ISpecificationsRepository {
   private repository: Repository<Specification>
 
-  private static INSTANCE: ISpecificationsRepository
-
-  private constructor() {
+  constructor() {
     this.repository = getRepository(Specification)
-  }
-
-  public static getInstance(): ISpecificationsRepository {
-    if (!SpecificationsRepository.INSTANCE) {
-      SpecificationsRepository.INSTANCE = new SpecificationsRepository()
-
-      return SpecificationsRepository.INSTANCE
-    }
-
-    return SpecificationsRepository.INSTANCE
   }
 
   public async create({

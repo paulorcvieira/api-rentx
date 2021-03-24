@@ -6,9 +6,9 @@ class ListSpecificationsController {
   constructor(private listSpecificationsUseCase: ListSpecificationsUseCase) {}
 
   public async handle(request: Request, response: Response): Promise<Response> {
-    const specifications = this.listSpecificationsUseCase.execute()
+    const specifications = await this.listSpecificationsUseCase.execute()
 
-    return response.json(specifications)
+    return response.status(200).json(specifications)
   }
 }
 

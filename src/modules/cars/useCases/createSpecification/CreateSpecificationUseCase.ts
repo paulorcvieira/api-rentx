@@ -21,12 +21,12 @@ class CreateSpecificationUseCase {
       throw new Error('Specification already exists.')
     }
 
-    const specificartion = await this.specificationRepository.create({
+    const specification = await this.specificationRepository.create({
       name,
       description,
     })
 
-    return specificartion
+    return specification
   }
 }
 
