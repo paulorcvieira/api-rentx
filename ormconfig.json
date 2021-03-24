@@ -1,11 +1,14 @@
 [{
   "name": "default",
   "type": "postgres",
-  "host": "localhost",
+  "host": "postgres_rentx",
   "port": 5432,
   "username": "postgres",
   "password": "postgres",
   "database": "rentx",
+  "charset": "utf8mb4",
+  "collation": "utf8mb4_unicode_ci",
+  "acquireTimeout": 20000,
   "entities": [
     "./src/modules/**/entities/*.ts"
   ],
