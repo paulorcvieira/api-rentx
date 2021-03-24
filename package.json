@@ -33,6 +33,7 @@
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "^4.1.6",
+    "tsyringe": "^4.5.0",
     "typeorm": "^0.2.31",
     "uuid": "^8.3.2"
   },
@@ -47,8 +48,8 @@
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
-    "commitlint-config-gitmoji": "^2.1.10",
     "commitizen": "^4.2.3",
+    "commitlint-config-gitmoji": "^2.1.10",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.18.0",
     "eslint-config-airbnb": "^18.2.1",
