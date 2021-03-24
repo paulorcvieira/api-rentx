@@ -1,0 +1,143 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Rentalx Documentation",
+    "description": "This is an API Rent",
+    "version": "1.0.0",
+    "contact":{
+      "email": "paullocostta86@gmail.com"
+    }
+  },
+  "paths": {
+    "/categories": {
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Create a category",
+        "description": "Create a new category and save on database",
+        "requestBody": {
+          "content":{
+            "application/json":{
+              "schema":{
+                "type":"object",
+                "properties":{
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "category name sample",
+                  "description":"Category description sample"
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201": {
+            "description": "Created"
+          },
+          "400":{
+            "description":"Bad Request"
+          }
+        }
+      },
+      "get":{
+        "tags": ["Categories"],
+        "summary": "List all categories",
+        "description":"List all categories",
+        "responses": {
+          "200":{
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "items":{
+                    "type": "object",
+                    "properties":{
+                      "name": {
+                        "type":"string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/specifications": {
+      "post": {
+        "tags": ["Specifications"],
+        "summary": "Create a specification",
+        "description": "Create a new specification and save on database",
+        "requestBody": {
+          "content":{
+            "application/json":{
+              "schema":{
+                "type":"object",
+                "properties":{
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "specification name sample",
+                  "description":"Specification description sample"
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201": {
+            "description": "Created"
+          },
+          "400":{
+            "description":"Bad Request"
+          }
+        }
+      },
+      "get":{
+        "tags": ["Specifications"],
+        "summary": "List all specifications",
+        "description":"List all specifications",
+        "responses": {
+          "200":{
+            "description": "Success",
+            "content":{
+              "application/json":{
+                "schema": {
+                  "type": "array",
+                  "items":{
+                    "type": "object",
+                    "properties":{
+                      "name": {
+                        "type":"string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

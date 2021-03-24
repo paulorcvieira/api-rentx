@@ -1,0 +1,10 @@
+node_modules
+yarn-error.log
+dist
+commands.txt
+.env
+.env.production
+.tool-versions
+.DS_Store
+coverage
+arquivo.csv

@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+  postgres_rentx:
+    container_name: postgres_rentx
+    image: ${DB_IMAGE}
+    restart: always
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      - POSTGRESQL_DATABASE=${DB_DATABASE}
+      - POSTGRESQL_USERNAME=${DB_USER}
+      - POSTGRESQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - pgdata:/data/postgres
+  api_rentx:
+    container_name: api_rentx
+    build: .
+    restart: always
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+      - 9229:9229
+    volumes:
+      - .:/usr/app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+    depends_on:
+      - postgres_rentx
+
+volumes:
+  pgdata:
+    driver: local
