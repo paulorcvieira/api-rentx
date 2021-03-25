@@ -47,10 +47,8 @@ class ImportCategoriesUseCase {
 
     const categories: Category[] = []
 
-    categoriesOnFile.map(async category => {
-      const { name, description } = category
-
-      const categoryExist = this.categoriesRepository.findByName(name)
+    categoriesOnFile.map(async ({ name, description }) => {
+      const categoryExist = await this.categoriesRepository.findByName(name)
 
       if (!categoryExist) {
         const category = await this.categoriesRepository.create({
