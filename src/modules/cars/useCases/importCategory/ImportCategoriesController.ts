@@ -12,7 +12,7 @@ class ImportCategoriesController {
 
       const categories = await importCategoriesUseCase.execute(file)
 
-      return response.status(200).json(categories)
+      return response.status(201).json(categories)
     } catch (error) {
       return response.status(400).json({ error: error.message })
     }
