@@ -20,7 +20,7 @@
     ]
   },
   "scripts": {
-    "dev": "tsnd --inspect --transpile-only --ignore-watch node_modules --respawn  src/server.ts",
+    "dev": "tsnd --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
     "test": "jest",
     "test:watch": "yarn test --watch",
     "lint": "eslint src --ext .ts,.tsx --fix",
