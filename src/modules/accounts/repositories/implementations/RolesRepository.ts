@@ -14,9 +14,9 @@ class RolesRepository implements IRolesRepository {
   public async create({
     name,
     description,
-    permission,
+    permissions,
   }: IRoleDTO): Promise<Role> {
-    const role = this.repository.create({ name, description, permission })
+    const role = this.repository.create({ name, description, permissions })
     await this.repository.save(role)
     return role
   }

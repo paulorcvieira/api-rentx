@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import { container } from 'tsyringe'
 
 import { ImportCategoriesUseCase } from './ImportCategoriesUseCase'
@@ -12,9 +13,11 @@ class ImportCategoriesController {
 
       const categories = await importCategoriesUseCase.execute(file)
 
-      return response.status(201).json(categories)
+      return response.status(StatusCodes.CREATED).json(categories)
     } catch (error) {
-      return response.status(400).json({ error: error.message })
+      return response
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: error.message })
     }
   }
 }

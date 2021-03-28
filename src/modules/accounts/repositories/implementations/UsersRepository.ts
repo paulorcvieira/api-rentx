@@ -18,6 +18,8 @@ class UsersRepository implements IUsersRepository {
     email,
     driver_license,
     roles,
+    id,
+    avatar,
   }: IUserDTO): Promise<User> {
     const user = this.repository.create({
       name,
@@ -26,14 +28,28 @@ class UsersRepository implements IUsersRepository {
       email,
       driver_license,
       roles,
+      id,
+      avatar,
     })
     await this.repository.save(user)
     return user
   }
 
+  public async findById(id: string): Promise<User | undefined> {
+    const user = await this.repository.findOne(id)
+    return user
+  }
+
+  public async findByIdWithRole(id: string): Promise<User | undefined> {
+    const user = await this.repository.findOne(id, {
+      relations: ['roles'],
+    })
+    return user
+  }
+
   public async findByUsername(username: string): Promise<User | undefined> {
-    const role = await this.repository.findOne({ where: { username } })
-    return role
+    const user = await this.repository.findOne({ where: { username } })
+    return user
   }
 
   public async findByUsernameWithRole(
@@ -47,13 +63,21 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async findByEmail(email: string): Promise<User | undefined> {
-    const role = await this.repository.findOne({ where: { email } })
-    return role
+    const user = await this.repository.findOne({ where: { email } })
+    return user
+  }
+
+  public async findByEmailWithRole(email: string): Promise<User | undefined> {
+    const user = await this.repository.findOne({
+      where: { email },
+      relations: ['roles'],
+    })
+    return user
   }
 
   public async list(): Promise<User[]> {
-    const roles = await this.repository.find()
-    return roles
+    const users = await this.repository.find()
+    return users
   }
 }
 

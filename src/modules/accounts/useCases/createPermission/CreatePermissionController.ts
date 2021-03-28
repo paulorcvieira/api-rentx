@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import { container } from 'tsyringe'
 
 import { CreatePermissionUseCase } from './CreatePermissionUseCase'
@@ -15,9 +16,11 @@ class CreatePermissionController {
         description,
       })
 
-      return response.status(201).json(permission)
+      return response.status(StatusCodes.CREATED).json(permission)
     } catch (error) {
-      return response.status(400).json({ error: error.message })
+      return response
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: error.message })
     }
   }
 }

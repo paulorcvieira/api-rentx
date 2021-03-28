@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import { container } from 'tsyringe'
 
 import { CreateUserUseCase } from './CreateUserUseCase'
@@ -26,9 +27,11 @@ class CreateUserController {
         roles,
       })
 
-      return response.status(201).json(user)
+      return response.status(StatusCodes.CREATED).json(user)
     } catch (error) {
-      return response.status(400).json({ error: error.message })
+      return response
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: error.message })
     }
   }
 }

@@ -32,7 +32,7 @@ class Role {
     joinColumns: [{ name: 'role_id' }],
     inverseJoinColumns: [{ name: 'permission_id' }],
   })
-  permission: Permission[]
+  permissions: Permission[]
 }
 
 export { Role }

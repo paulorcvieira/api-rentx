@@ -1,5 +1,8 @@
 import { container } from 'tsyringe'
 
+import '../../modules/accounts/providers'
+import './providers'
+
 import { PermissionsRepository } from '../../modules/accounts/repositories/implementations/PermissionsRepository'
 import { RolesRepository } from '../../modules/accounts/repositories/implementations/RolesRepository'
 import { UsersRepository } from '../../modules/accounts/repositories/implementations/UsersRepository'

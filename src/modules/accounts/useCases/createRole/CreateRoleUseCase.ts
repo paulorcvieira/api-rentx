@@ -1,5 +1,7 @@
+import { StatusCodes } from 'http-status-codes'
 import { injectable, inject } from 'tsyringe'
 
+import AppException from '../../../../shared/exceptions/AppException'
 import { IRoleDTO } from '../../dtos/IRoleDTO'
 import { Role } from '../../entities/Role'
 import { IPermissionsRepository } from '../../repositories/IPermissionsRepository'
@@ -18,26 +20,32 @@ class CreateRoleUseCase {
   public async execute({
     name,
     description,
-    permission,
+    permissions,
   }: IRoleDTO): Promise<Role> {
     const permissionExists = await this.rolesRepository.findByName(name)
 
     if (permissionExists) {
-      throw new Error('Role already exists')
+      throw new AppException(
+        'This role is already registered.',
+        StatusCodes.UNAUTHORIZED,
+      )
     }
 
     const existsPermissions = await this.permissionsRepository.findById(
-      permission,
+      permissions,
     )
 
     if (!existsPermissions) {
-      throw new Error('Permission not found')
+      throw new AppException(
+        'This permission not found.',
+        StatusCodes.NOT_FOUND,
+      )
     }
 
     const permissionCreated = await this.rolesRepository.create({
       name,
       description,
-      permission: existsPermissions,
+      permissions: existsPermissions,
     })
 
     return permissionCreated

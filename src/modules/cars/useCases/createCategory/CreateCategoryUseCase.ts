@@ -1,5 +1,7 @@
+import { StatusCodes } from 'http-status-codes'
 import { injectable, inject } from 'tsyringe'
 
+import AppException from '../../../../shared/exceptions/AppException'
 import { Category } from '../../entities/Category'
 import { ICategoriesRepository } from '../../repositories/ICategoriesRepository'
 
@@ -12,17 +14,20 @@ interface IRequestDTO {
 class CreateCategoryUseCase {
   constructor(
     @inject('CategoriesRepository')
-    private categoryRepository: ICategoriesRepository,
+    private categoriesRepository: ICategoriesRepository,
   ) {}
 
   public async execute({ name, description }: IRequestDTO): Promise<Category> {
-    const categoryExists = await this.categoryRepository.findByName(name)
+    const categoryExists = await this.categoriesRepository.findByName(name)
 
     if (categoryExists) {
-      throw new Error('Category already exists')
+      throw new AppException(
+        'This categoryis already registered.',
+        StatusCodes.CONFLICT,
+      )
     }
 
-    const category = await this.categoryRepository.create({
+    const category = await this.categoriesRepository.create({
       name,
       description,
     })

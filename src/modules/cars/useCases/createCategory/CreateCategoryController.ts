@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import { container } from 'tsyringe'
 
 import { CreateCategoryUseCase } from './CreateCategoryUseCase'
@@ -15,9 +16,11 @@ class CreateCategoryController {
         description,
       })
 
-      return response.status(201).json(category)
+      return response.status(StatusCodes.CREATED).json(category)
     } catch (error) {
-      return response.status(400).json({ error: error.message })
+      return response
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: error.message })
     }
   }
 }

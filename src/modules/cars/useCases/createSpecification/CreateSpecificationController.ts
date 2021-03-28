@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import { container } from 'tsyringe'
 
 import { CreateSpecificationUseCase } from './CreateSpecificationUseCase'
@@ -17,9 +18,11 @@ class CreateSpecificationController {
         description,
       })
 
-      return response.status(201).json(specification)
+      return response.status(StatusCodes.CREATED).json(specification)
     } catch (error) {
-      return response.status(400).json({ error: error.message })
+      return response
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: error.message })
     }
   }
 }

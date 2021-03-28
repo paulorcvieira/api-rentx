@@ -23,7 +23,7 @@ export class CreatePermissionsRoles1616706126466 implements MigrationInterface {
         columnNames: ['permission_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'permissions',
-        name: 'fk_permissions_roles_',
+        name: 'fk_permissions_roles',
         onDelete: 'CASCADE',
         onUpdate: 'SET NULL',
       }),
@@ -49,7 +49,7 @@ export class CreatePermissionsRoles1616706126466 implements MigrationInterface {
     )
     await queryRunner.dropForeignKey(
       'permissions_roles',
-      'fk_permissions_roles_',
+      'fk_permissions_roles',
     )
 
     await queryRunner.dropTable('permissions_roles')

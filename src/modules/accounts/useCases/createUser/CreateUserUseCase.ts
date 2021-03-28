@@ -1,6 +1,8 @@
-import { hash } from 'bcryptjs'
+import { hash } from 'bcrypt'
+import { StatusCodes } from 'http-status-codes'
 import { injectable, inject } from 'tsyringe'
 
+import AppException from '../../../../shared/exceptions/AppException'
 import { IUserDTO } from '../../dtos/IUserDTO'
 import { User } from '../../entities/User'
 import { IRolesRepository } from '../../repositories/IRolesRepository'
@@ -24,36 +26,47 @@ class CreateUserUseCase {
     driver_license,
     roles,
   }: IUserDTO): Promise<User> {
+    if (password && password.length < 6) {
+      throw new AppException(
+        'Password must be at least 6 characters.',
+        StatusCodes.UNAUTHORIZED,
+      )
+    }
+
     const usernameExists = await this.usersRepository.findByUsername(username)
 
     if (usernameExists) {
-      throw new Error('Username already exists')
+      throw new AppException(
+        'This username is already registered.',
+        StatusCodes.CONFLICT,
+      )
     }
 
     const emailExists = await this.usersRepository.findByEmail(email)
 
     if (emailExists) {
-      throw new Error('Email already exists')
+      throw new AppException(
+        'This email is already registered.',
+        StatusCodes.CONFLICT,
+      )
     }
 
     const existsRoles = await this.rolesRepository.findById(roles)
 
     if (!existsRoles) {
-      throw new Error('Role not found')
+      throw new AppException('This role not found.', StatusCodes.NOT_FOUND)
     }
 
-    const passwordHashed = await hash(password, 8)
+    const passwordHash = await hash(password, 8)
 
     const user = await this.usersRepository.create({
       name,
       username,
-      password: passwordHashed,
+      password: passwordHash,
       email,
       driver_license,
       roles: existsRoles,
     })
-
-    delete user.password
 
     return user
   }

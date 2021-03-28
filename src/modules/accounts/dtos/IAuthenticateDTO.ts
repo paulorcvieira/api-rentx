@@ -1,5 +1,5 @@
 interface IAuthenticateDTO {
-  username: string
+  [emailOrUsername: string]: string
   password: string
 }
 

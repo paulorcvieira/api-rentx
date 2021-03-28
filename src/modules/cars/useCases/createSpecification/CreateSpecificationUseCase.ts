@@ -1,5 +1,7 @@
+import { StatusCodes } from 'http-status-codes'
 import { inject, injectable } from 'tsyringe'
 
+import AppException from '../../../../shared/exceptions/AppException'
 import { Specification } from '../../entities/Specification'
 import { ISpecificationsRepository } from '../../repositories/ISpecificationsRepository'
 
@@ -24,7 +26,10 @@ class CreateSpecificationUseCase {
     )
 
     if (specificationExists) {
-      throw new Error('Specification already exists.')
+      throw new AppException(
+        'This specification is already registered.',
+        StatusCodes.CONFLICT,
+      )
     }
 
     const specification = await this.specificationRepository.create({

@@ -1,5 +1,7 @@
+import { StatusCodes } from 'http-status-codes'
 import { injectable, inject } from 'tsyringe'
 
+import AppException from '../../../../shared/exceptions/AppException'
 import { IPermissionDTO } from '../../dtos/IPermissionDTO'
 import { Permission } from '../../entities/Permission'
 import { IPermissionsRepository } from '../../repositories/IPermissionsRepository'
@@ -18,7 +20,10 @@ class CreatePermissionUseCase {
     const permissionExists = await this.permissionsRepository.findByName(name)
 
     if (permissionExists) {
-      throw new Error('Permission already exists')
+      throw new AppException(
+        'This permission is already registered.',
+        StatusCodes.CONFLICT,
+      )
     }
 
     const permission = await this.permissionsRepository.create({

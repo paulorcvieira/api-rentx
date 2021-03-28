@@ -7,6 +7,8 @@ interface IUserDTO {
   email: string
   driver_license: string
   roles: IRoleDTO[]
+  id?: string
+  avatar?: string
 }
 
 export { IUserDTO }
