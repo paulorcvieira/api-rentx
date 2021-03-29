@@ -25,6 +25,18 @@ describe('Create Category', () => {
       category.name,
     )
 
-    expect(categoryCreated).toHaveProperty('name')
+    expect(categoryCreated).toHaveProperty('id')
+  })
+
+  test('should not be able to create a new category with name exists', () => {
+    expect(async () => {
+      const category = {
+        name: 'Category name test',
+        description: 'Category description test',
+      }
+
+      await createCategoryUseCase.execute(category)
+      await createCategoryUseCase.execute(category)
+    }).rejects.toBeInstanceOf(AppException)
   })
 })
