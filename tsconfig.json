@@ -6,7 +6,7 @@
     "rootDir": "./",
     "strict": true,
     "strictPropertyInitialization": false,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "allowJs": true,
     "paths": {
       "@tests/*": ["__tests__/*"],
