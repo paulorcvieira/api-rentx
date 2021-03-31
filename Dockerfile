@@ -1,13 +1,11 @@
-FROM node
+FROM node:14.15.4-alpine3.12
 
-WORKDIR /usr/app
+USER node
 
-COPY package.json ./
-
-RUN npm install
+WORKDIR /home/node/app
 
 COPY . .
 
 EXPOSE 3333
 
-CMD ["npm", "run", "dev"]
+ENTRYPOINT [".docker/entrypoint.sh"]
