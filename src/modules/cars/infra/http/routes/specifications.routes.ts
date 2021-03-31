@@ -1,6 +1,7 @@
 import { Router } from 'express'
 
-import { is } from '../../../../accounts/infra/http/middlewares/ensurePermission'
+import { is } from '@shared/infra/http/middlewares/ensurePermission'
+
 import {
   CreateSpecificationController,
   ListSpecificationsController,

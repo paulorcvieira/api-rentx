@@ -1,8 +1,9 @@
 import { Router } from 'express'
 import multer from 'multer'
 
-import uploadConfig from '../../../../../config/upload'
-import { is } from '../../../../accounts/infra/http/middlewares/ensurePermission'
+import uploadConfig from '@config/upload'
+import { is } from '@shared/infra/http/middlewares/ensurePermission'
+
 import {
   CreateCategoryController,
   ImportCategoriesController,

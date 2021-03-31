@@ -1,7 +1,8 @@
 import { Router } from 'express'
 
+import { is } from '@shared/infra/http/middlewares/ensurePermission'
+
 import { CreateRoleController } from '../../../useCases'
-import { is } from '../middlewares/ensurePermission'
 
 const rolesRouter = Router()
 

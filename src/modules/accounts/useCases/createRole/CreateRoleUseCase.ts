@@ -1,9 +1,10 @@
 import { StatusCodes } from 'http-status-codes'
 import { injectable, inject } from 'tsyringe'
 
-import AppException from '../../../../shared/exceptions/AppException'
+import { Role } from '@modules/accounts/infra/typeorm/entities/Role'
+import AppException from '@shared/exceptions/AppException'
+
 import { IRoleDTO } from '../../dtos/IRoleDTO'
-import { Role } from '../../entities/Role'
 import { IPermissionsRepository } from '../../repositories/IPermissionsRepository'
 import { IRolesRepository } from '../../repositories/IRolesRepository'
 

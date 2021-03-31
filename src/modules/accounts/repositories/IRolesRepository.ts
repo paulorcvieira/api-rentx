@@ -1,5 +1,5 @@
 import { IRoleDTO } from '../dtos/IRoleDTO'
-import { Role } from '../entities/Role'
+import { Role } from '../infra/typeorm/entities/Role'
 
 interface IRolesRepository {
   create(data: IRoleDTO): Promise<Role>

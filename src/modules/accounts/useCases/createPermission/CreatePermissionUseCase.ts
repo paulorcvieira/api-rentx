@@ -1,9 +1,10 @@
 import { StatusCodes } from 'http-status-codes'
 import { injectable, inject } from 'tsyringe'
 
-import AppException from '../../../../shared/exceptions/AppException'
+import { Permission } from '@modules/accounts/infra/typeorm/entities/Permission'
+import AppException from '@shared/exceptions/AppException'
+
 import { IPermissionDTO } from '../../dtos/IPermissionDTO'
-import { Permission } from '../../entities/Permission'
 import { IPermissionsRepository } from '../../repositories/IPermissionsRepository'
 
 @injectable()

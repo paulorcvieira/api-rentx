@@ -1,8 +1,9 @@
 import { StatusCodes } from 'http-status-codes'
 import { injectable, inject } from 'tsyringe'
 
-import AppException from '../../../../shared/exceptions/AppException'
-import { User } from '../../entities/User'
+import { User } from '@modules/accounts/infra/typeorm/entities/User'
+import AppException from '@shared/exceptions/AppException'
+
 import { IUsersRepository } from '../../repositories/IUsersRepository'
 
 @injectable()

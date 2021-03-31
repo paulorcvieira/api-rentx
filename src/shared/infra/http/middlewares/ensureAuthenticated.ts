@@ -1,8 +1,9 @@
 import { verify } from 'jsonwebtoken'
 
-import { ExpressMiddleware } from '../../../../../@types/middleware'
-import { jwt } from '../../../../../config/auth-config'
-import { UsersRepository } from '../../../repositories/implementations/UsersRepository'
+import { jwt } from '@config/auth-config'
+import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository'
+
+import { ExpressMiddleware } from '../../../../@types/middleware'
 
 interface ITokenPayload {
   iat: number

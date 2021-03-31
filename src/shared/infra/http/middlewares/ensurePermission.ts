@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { container } from 'tsyringe'
 
-import { GetUserUseCase } from '../../../useCases/getUser/GetUserUseCase'
+import { GetUserUseCase } from '@modules/accounts/useCases/getUser/GetUserUseCase'
 
 function is(
   role: string[],

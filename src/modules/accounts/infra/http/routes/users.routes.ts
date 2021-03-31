@@ -1,12 +1,13 @@
 import { Router } from 'express'
 import multer from 'multer'
 
-import uploadConfig from '../../../../../config/upload'
+import uploadConfig from '@config/upload'
+import { is } from '@shared/infra/http/middlewares/ensurePermission'
+
 import {
   CreateUserController,
   UpdateUserAvatarController,
 } from '../../../useCases'
-import { is } from '../middlewares/ensurePermission'
 
 const usersRouter = Router()
 

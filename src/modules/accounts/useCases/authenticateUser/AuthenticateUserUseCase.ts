@@ -3,10 +3,11 @@ import { StatusCodes } from 'http-status-codes'
 import { sign } from 'jsonwebtoken'
 import { injectable, inject } from 'tsyringe'
 
-import { jwt } from '../../../../config/auth-config'
-import AppException from '../../../../shared/exceptions/AppException'
+import { jwt } from '@config/auth-config'
+import { User } from '@modules/accounts/infra/typeorm/entities/User'
+import AppException from '@shared/exceptions/AppException'
+
 import { IAuthenticateDTO } from '../../dtos/IAuthenticateDTO'
-import { User } from '../../entities/User'
 import { IUsersRepository } from '../../repositories/IUsersRepository'
 
 interface IResponse {
@@ -44,6 +45,13 @@ class AuthenticateUserUseCase {
     if (!user) {
       throw new AppException(
         'Incorrect credentials, try again.',
+        StatusCodes.UNAUTHORIZED,
+      )
+    }
+
+    if (!user.status) {
+      throw new AppException(
+        'No permission to authenticate.',
         StatusCodes.UNAUTHORIZED,
       )
     }

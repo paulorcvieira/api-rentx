@@ -1,5 +1,5 @@
 import { IPermissionDTO } from '../dtos/IPermissionDTO'
-import { Permission } from '../entities/Permission'
+import { Permission } from '../infra/typeorm/entities/Permission'
 
 interface IPermissionsRepository {
   create(data: IPermissionDTO): Promise<Permission>

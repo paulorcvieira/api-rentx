@@ -1,8 +1,9 @@
 import { getRepository, Repository } from 'typeorm'
 
-import { IRoleDTO } from '../../dtos/IRoleDTO'
-import { Role } from '../../entities/Role'
-import { IRolesRepository } from '../IRolesRepository'
+import { IRoleDTO } from '@modules/accounts/dtos/IRoleDTO'
+import { IRolesRepository } from '@modules/accounts/repositories/IRolesRepository'
+
+import { Role } from '../entities/Role'
 
 class RolesRepository implements IRolesRepository {
   private repository: Repository<Role>

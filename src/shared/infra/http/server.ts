@@ -6,7 +6,8 @@ import express from 'express'
 import 'express-async-errors'
 import swaggerUi from 'swagger-ui-express'
 
-import uploadConfig from '../../../config/upload'
+import uploadConfig from '@config/upload'
+
 import generalException from './middlewares/generalException'
 import { routes } from './routes'
 import swaggerFile from './swagger.json'

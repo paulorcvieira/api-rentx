@@ -1,18 +1,18 @@
 import { container } from 'tsyringe'
 
-import '../../modules/accounts/providers'
+import '@modules/accounts/providers'
 import './providers'
 
-import { PermissionsRepository } from '../../modules/accounts/repositories/implementations/PermissionsRepository'
-import { RolesRepository } from '../../modules/accounts/repositories/implementations/RolesRepository'
-import { UsersRepository } from '../../modules/accounts/repositories/implementations/UsersRepository'
-import { IPermissionsRepository } from '../../modules/accounts/repositories/IPermissionsRepository'
-import { IRolesRepository } from '../../modules/accounts/repositories/IRolesRepository'
-import { IUsersRepository } from '../../modules/accounts/repositories/IUsersRepository'
-import { ICategoriesRepository } from '../../modules/cars/repositories/ICategoriesRepository'
-import { CategoriesRepository } from '../../modules/cars/repositories/implementations/CategoriesRepository'
-import { SpecificationsRepository } from '../../modules/cars/repositories/implementations/SpecificationsRepository'
-import { ISpecificationsRepository } from '../../modules/cars/repositories/ISpecificationsRepository'
+import { PermissionsRepository } from '@modules/accounts/infra/typeorm/repositories/PermissionsRepository'
+import { RolesRepository } from '@modules/accounts/infra/typeorm/repositories/RolesRepository'
+import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository'
+import { IPermissionsRepository } from '@modules/accounts/repositories/IPermissionsRepository'
+import { IRolesRepository } from '@modules/accounts/repositories/IRolesRepository'
+import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository'
+import { CategoriesRepository } from '@modules/cars/infra/typeorm/repositories/CategoriesRepository'
+import { SpecificationsRepository } from '@modules/cars/infra/typeorm/repositories/SpecificationsRepository'
+import { ICategoriesRepository } from '@modules/cars/repositories/ICategoriesRepository'
+import { ISpecificationsRepository } from '@modules/cars/repositories/ISpecificationsRepository'
 
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',

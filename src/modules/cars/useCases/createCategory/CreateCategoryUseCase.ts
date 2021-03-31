@@ -1,8 +1,9 @@
 import { StatusCodes } from 'http-status-codes'
 import { injectable, inject } from 'tsyringe'
 
-import AppException from '../../../../shared/exceptions/AppException'
-import { Category } from '../../entities/Category'
+import { Category } from '@modules/cars/infra/typeorm/entities/Category'
+import AppException from '@shared/exceptions/AppException'
+
 import { ICategoriesRepository } from '../../repositories/ICategoriesRepository'
 
 interface IRequestDTO {

@@ -2,9 +2,10 @@ import { hash } from 'bcrypt'
 import { StatusCodes } from 'http-status-codes'
 import { injectable, inject } from 'tsyringe'
 
-import AppException from '../../../../shared/exceptions/AppException'
+import { User } from '@modules/accounts/infra/typeorm/entities/User'
+import AppException from '@shared/exceptions/AppException'
+
 import { IUserDTO } from '../../dtos/IUserDTO'
-import { User } from '../../entities/User'
 import { IRolesRepository } from '../../repositories/IRolesRepository'
 import { IUsersRepository } from '../../repositories/IUsersRepository'
 

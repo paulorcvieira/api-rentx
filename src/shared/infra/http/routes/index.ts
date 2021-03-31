@@ -1,16 +1,17 @@
 import { Router } from 'express'
 
-import ensureAuthenticated from '../../../../modules/accounts/infra/http/middlewares/ensureAuthenticated'
 import {
   usersRouter,
   authenticateRouter,
   rolesRouter,
   permissionsRouter,
-} from '../../../../modules/accounts/infra/http/routes'
+} from '@modules/accounts/infra/http/routes'
 import {
   categoriesRouter,
   specificationsRouter,
-} from '../../../../modules/cars/infra/http/routes'
+} from '@modules/cars/infra/http/routes'
+
+import ensureAuthenticated from '../middlewares/ensureAuthenticated'
 
 const routes = Router()
 

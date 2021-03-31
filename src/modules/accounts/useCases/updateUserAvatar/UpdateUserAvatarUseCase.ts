@@ -1,10 +1,11 @@
 import { StatusCodes } from 'http-status-codes'
 import { inject, injectable } from 'tsyringe'
 
-import uploadConfig from '../../../../config/upload'
-import IStorageProvider from '../../../../shared/container/providers/StorageProvider/models/IStorageProvider'
-import AppException from '../../../../shared/exceptions/AppException'
-import { User } from '../../entities/User'
+import uploadConfig from '@config/upload'
+import { User } from '@modules/accounts/infra/typeorm/entities/User'
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider'
+import AppException from '@shared/exceptions/AppException'
+
 import { IUsersRepository } from '../../repositories/IUsersRepository'
 
 interface IRequestDTO {

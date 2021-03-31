@@ -1,4 +1,5 @@
-import AppException from '../../../../shared/exceptions/AppException'
+import AppException from '@shared/exceptions/AppException'
+
 import { CategoriesRepositoryInMemory } from '../../repositories/in-memory/CategoriesRepositoryInMemory'
 import { CreateCategoryUseCase } from './CreateCategoryUseCase'
 

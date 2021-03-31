@@ -1,4 +1,4 @@
-import { Permission } from '../entities/Permission'
+import { Permission } from '../infra/typeorm/entities/Permission'
 
 interface IRoleDTO {
   name: string
