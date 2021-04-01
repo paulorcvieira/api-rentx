@@ -23,7 +23,7 @@ class CreateCategoryUseCase {
 
     if (categoryExists) {
       throw new AppException(
-        'This categoryis already registered.',
+        'This category is already registered.',
         StatusCodes.CONFLICT,
       )
     }
