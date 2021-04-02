@@ -15,3 +15,6 @@ export { ListSpecificationsUseCase } from './listSpecifications/ListSpecificatio
 
 export { CreateCarController } from './createCar/CreateCarController'
 export { CreateCarUseCase } from './createCar/CreateCarUseCase'
+
+export { ListCarsController } from './listCars/ListCarsController'
+export { ListCarsUseCase } from './listCars/ListCarsUseCase'
