@@ -23,10 +23,11 @@
     "dev": "tsnd -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
     "lint": "eslint src --ext .ts,.tsx --fix",
     "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli",
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test": "jest",
     "test:watch": "yarn test --watch",
     "test:verbose": "jest --passWithNoTests --runInBand",
-    "clear": "jest --clearCache"
+    "clear": "jest --clearCache",
+    "seed:admin": "tsnd src/shared/infra/typeorm/seeds/admin.ts"
   },
   "dependencies": {
     "aws-sdk": "^2.874.0",

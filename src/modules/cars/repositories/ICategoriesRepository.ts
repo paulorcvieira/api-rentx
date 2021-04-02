@@ -4,6 +4,7 @@ import { Category } from '../infra/typeorm/entities/Category'
 interface ICategoriesRepository {
   create(data: ICreateCategoryDTO): Promise<Category>
   findByName(name: string): Promise<Category | undefined>
+  findById(category_id: string): Promise<Category | undefined>
   list(): Promise<Category[]>
 }
 

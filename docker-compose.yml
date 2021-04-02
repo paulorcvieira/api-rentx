@@ -1,7 +1,7 @@
-version: "3.7"
+version: "3.9"
 
 services:
-  postgres_rentx:
+  database:
     container_name: postgres_rentx
     image: ${DB_IMAGE}
     restart: always
@@ -13,7 +13,8 @@ services:
       - POSTGRESQL_PASSWORD=${DB_PASSWORD}
     volumes:
       - pgdata:/data/postgres
-  api_rentx:
+
+  app:
     container_name: api_rentx
     build: .
     restart: always
@@ -27,8 +28,10 @@ services:
       options:
         max-size: "10m"
         max-file: "5"
+    links:
+      - database
     depends_on:
-      - postgres_rentx
+      - database
 
 volumes:
   pgdata:

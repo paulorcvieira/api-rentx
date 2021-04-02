@@ -9,13 +9,7 @@
   "charset": "utf8mb4",
   "collation": "utf8mb4_unicode_ci",
   "acquireTimeout": 20000,
-  "entities": [
-    "./src/modules/**/entities/*.ts"
-  ],
-  "migrations": [
-    "./src/shared/infra/typeorm/migrations/*.ts"
-  ],
-  "cli": {
-    "migrationsDir": "./src/shared/infra/typeorm/migrations"
-  }
+  "entities": ["./src/modules/**/entities/*.ts"],
+  "migrations": ["./src/shared/infra/typeorm/migrations/*.ts"],
+  "cli": { "migrationsDir": "./src/shared/infra/typeorm/migrations" }
 }]

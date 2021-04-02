@@ -7,17 +7,18 @@ import 'express-async-errors'
 import swaggerUi from 'swagger-ui-express'
 
 import uploadConfig from '@config/upload'
+import createConnection from '@shared/infra/typeorm'
 
 import generalException from './middlewares/generalException'
 import { routes } from './routes'
 import swaggerFile from './swagger.json'
 
-import '../typeorm'
 import '../../container'
 
 const HOST = process.env.SERVER_HOST || 'http://localhost'
 const PORT = process.env.SERVER_PORT || 3333
 
+createConnection()
 const app = express()
 
 app.use(cors())

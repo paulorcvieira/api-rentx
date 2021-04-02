@@ -9,6 +9,7 @@ import {
 import {
   categoriesRouter,
   specificationsRouter,
+  carsRouter,
 } from '@modules/cars/infra/http/routes'
 
 import ensureAuthenticated from '../middlewares/ensureAuthenticated'
@@ -25,5 +26,7 @@ routes.use('/roles', rolesRouter)
 
 routes.use('/categories', categoriesRouter)
 routes.use('/specifications', specificationsRouter)
+
+routes.use('/cars', carsRouter)
 
 export { routes }
