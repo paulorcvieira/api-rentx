@@ -1,4 +1,5 @@
 import { ICreateCarDTO } from '@modules/cars/dtos/ICreateCarDTO'
+import { IFindCarsAvailable } from '@modules/cars/dtos/IFindCarsAvailable'
 import { Car } from '@modules/cars/infra/typeorm/entities/Car'
 
 import { ICarsRepository } from '../ICarsRepository'
@@ -7,6 +8,7 @@ class CarsRepositoryInMemory implements ICarsRepository {
   cars: Car[] = []
 
   public async create({
+    id,
     name,
     description,
     daily_rate,
@@ -18,6 +20,7 @@ class CarsRepositoryInMemory implements ICarsRepository {
     const car = new Car()
 
     Object.assign(car, {
+      id,
       name,
       description,
       daily_rate,
@@ -39,11 +42,11 @@ class CarsRepositoryInMemory implements ICarsRepository {
     return car
   }
 
-  async findAvailable(
-    category_id: string,
-    brand: string,
-    name: string,
-  ): Promise<Car[]> {
+  public async findAvailable({
+    category_id,
+    brand,
+    name,
+  }: IFindCarsAvailable): Promise<Car[]> {
     let cars: Car[] = []
 
     const availableCars = this.cars.filter(car => car.available === true)
@@ -65,6 +68,11 @@ class CarsRepositoryInMemory implements ICarsRepository {
     }
 
     return cars
+  }
+
+  public async findById(car_id: string): Promise<Car | undefined> {
+    const car = this.cars.find(car => car.id === car_id)
+    return car
   }
 }
 

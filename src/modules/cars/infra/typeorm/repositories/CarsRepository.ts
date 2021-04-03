@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm'
 
 import { ICreateCarDTO } from '@modules/cars/dtos/ICreateCarDTO'
+import { IFindCarsAvailable } from '@modules/cars/dtos/IFindCarsAvailable'
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository'
 
 import { Car } from '../entities/Car'
@@ -25,11 +26,11 @@ class CarsRepository implements ICarsRepository {
     return car
   }
 
-  public async findAvailable(
-    category_id?: string,
-    brand?: string,
-    name?: string,
-  ): Promise<Car[]> {
+  public async findAvailable({
+    category_id,
+    brand,
+    name,
+  }: IFindCarsAvailable): Promise<Car[]> {
     const carsQuery = await this.repository
       .createQueryBuilder('car')
       .where('available = :available', { available: true })
@@ -49,6 +50,11 @@ class CarsRepository implements ICarsRepository {
     const cars = await carsQuery.getMany()
 
     return cars
+  }
+
+  public async findById(car_id: string): Promise<Car | undefined> {
+    const car = await this.repository.findOne({ id: car_id })
+    return car
   }
 }
 export { CarsRepository }
