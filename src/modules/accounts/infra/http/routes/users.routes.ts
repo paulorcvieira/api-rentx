@@ -2,6 +2,7 @@ import { Router } from 'express'
 import multer from 'multer'
 
 import uploadConfig from '@config/upload'
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated'
 import { is } from '@shared/infra/http/middlewares/ensurePermission'
 
 import {
@@ -15,6 +16,8 @@ const createUserController = new CreateUserController()
 const updateUserAvatarController = new UpdateUserAvatarController()
 
 const upload = multer(uploadConfig.upload('./tmp/avatar'))
+
+usersRouter.use(ensureAuthenticated)
 
 usersRouter.post('/', is(['ROLE_ADMIN']), createUserController.handle)
 

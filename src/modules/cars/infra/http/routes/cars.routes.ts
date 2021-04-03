@@ -1,14 +1,18 @@
 import { Router } from 'express'
 
-import { CreateCarController, ListCarsController } from '@modules/cars/useCases'
+import {
+  CreateCarController,
+  ListAvailableCarsController,
+} from '@modules/cars/useCases'
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated'
 
 const carsRouter = Router()
 
 const createCarController = new CreateCarController()
-const listCarsController = new ListCarsController()
+const listAvailableCarsController = new ListAvailableCarsController()
 
-carsRouter.get('/', listCarsController.handle)
+carsRouter.get('/available', listAvailableCarsController.handle)
 
-carsRouter.post('/', createCarController.handle)
+carsRouter.post('/', ensureAuthenticated, createCarController.handle)
 
 export { carsRouter }

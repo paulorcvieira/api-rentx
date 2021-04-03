@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated'
 import { is } from '@shared/infra/http/middlewares/ensurePermission'
 
 import {
@@ -11,6 +12,8 @@ const specificationsRouter = Router()
 
 const listSpecificationsController = new ListSpecificationsController()
 const createSpecificationsController = new CreateSpecificationController()
+
+specificationsRouter.use(ensureAuthenticated)
 
 specificationsRouter.get(
   '/',

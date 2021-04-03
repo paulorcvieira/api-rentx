@@ -12,13 +12,9 @@ import {
   carsRouter,
 } from '@modules/cars/infra/http/routes'
 
-import ensureAuthenticated from '../middlewares/ensureAuthenticated'
-
 const routes = Router()
 
 routes.use('/sessions', authenticateRouter)
-
-routes.use(ensureAuthenticated)
 
 routes.use('/users', usersRouter)
 routes.use('/permissions', permissionsRouter)

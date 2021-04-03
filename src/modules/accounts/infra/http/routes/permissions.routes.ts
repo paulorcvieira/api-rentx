@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated'
 import { is } from '@shared/infra/http/middlewares/ensurePermission'
 
 import {
@@ -11,6 +12,8 @@ const permissionsRouter = Router()
 
 const createPermissionController = new CreatePermissionController()
 const listPermissionsController = new ListPermissionsController()
+
+permissionsRouter.use(ensureAuthenticated)
 
 permissionsRouter.get('/', is(['ROLE_ADMIN']), listPermissionsController.handle)
 

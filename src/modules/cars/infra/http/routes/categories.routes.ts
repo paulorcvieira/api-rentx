@@ -2,6 +2,7 @@ import { Router } from 'express'
 import multer from 'multer'
 
 import uploadConfig from '@config/upload'
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated'
 import { is } from '@shared/infra/http/middlewares/ensurePermission'
 
 import {
@@ -17,6 +18,8 @@ const upload = multer(uploadConfig.upload('./tmp/categories'))
 const listCategoriesController = new ListCategoriesController()
 const createCategoriesController = new CreateCategoryController()
 const importCategoriesController = new ImportCategoriesController()
+
+categoriesRouter.use(ensureAuthenticated)
 
 categoriesRouter.get(
   '/',
