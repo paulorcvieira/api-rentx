@@ -1,8 +1,16 @@
 import { Request, Response, NextFunction } from 'express'
 import { StatusCodes } from 'http-status-codes'
+import { verify } from 'jsonwebtoken'
 import { container } from 'tsyringe'
 
+import { jwt } from '@config/auth-config'
 import { GetUserUseCase } from '@modules/accounts/useCases/getUser/GetUserUseCase'
+
+interface ITokenPayload {
+  iat: number
+  exp: number
+  sub: string
+}
 
 function is(
   role: string[],
@@ -17,12 +25,22 @@ function is(
     response: Response,
     next: NextFunction,
   ) => {
-    const { id } = request.user
+    const authHeader = request.headers.authorization
+
+    if (!authHeader) {
+      throw new Error('JWT token is missing')
+    }
+
+    const [, token] = authHeader.split(' ')
 
     try {
+      const { sub } = verify(token, jwt.secret, {
+        algorithms: ['HS256'],
+      }) as ITokenPayload
+
       const getUserUseCase = container.resolve(GetUserUseCase)
 
-      const user = await getUserUseCase.execute(id)
+      const user = await getUserUseCase.execute(sub)
 
       const userRoles = user?.roles.map(role => role.name)
 
