@@ -42,7 +42,7 @@ class CreateCarUseCase {
     if (!categoryExists) {
       throw new AppException(
         'This category is not registered.',
-        StatusCodes.CONFLICT,
+        StatusCodes.BAD_REQUEST,
       )
     }
 
