@@ -1,8 +1,8 @@
-import { hash } from 'bcrypt'
 import { StatusCodes } from 'http-status-codes'
 import { injectable, inject } from 'tsyringe'
 
 import { User } from '@modules/accounts/infra/typeorm/entities/User'
+import IHashProvider from '@modules/accounts/providers/HashProvider/repositories/IHashProvider'
 import AppException from '@shared/exceptions/AppException'
 
 import { IUserDTO } from '../../dtos/IUserDTO'
@@ -17,6 +17,9 @@ class CreateUserUseCase {
 
     @inject('RolesRepository')
     private rolesRepository: IRolesRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute({
@@ -58,7 +61,7 @@ class CreateUserUseCase {
       throw new AppException('This role not found.', StatusCodes.NOT_FOUND)
     }
 
-    const passwordHash = await hash(password, 8)
+    const passwordHash = await this.hashProvider.generateHash(password)
 
     const user = await this.usersRepository.create({
       name,

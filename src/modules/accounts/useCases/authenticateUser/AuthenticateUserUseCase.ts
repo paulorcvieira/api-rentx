@@ -1,10 +1,9 @@
-import { compare } from 'bcrypt'
 import { StatusCodes } from 'http-status-codes'
-import { sign } from 'jsonwebtoken'
 import { injectable, inject } from 'tsyringe'
 
-import { jwt } from '@config/auth-config'
 import { User } from '@modules/accounts/infra/typeorm/entities/User'
+import IHashProvider from '@modules/accounts/providers/HashProvider/repositories/IHashProvider'
+import ITokenProvider from '@modules/accounts/providers/TokenProvider/repositories/ITokenProvider'
 import AppException from '@shared/exceptions/AppException'
 
 import { IAuthenticateDTO } from '../../dtos/IAuthenticateDTO'
@@ -23,12 +22,13 @@ class AuthenticateUserUseCase {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
-  ) {}
 
-  private isEmail(email: string): boolean {
-    const re = /\S+@\S+\.\S+/
-    return re.test(email)
-  }
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
+
+    @inject('TokenProvider')
+    private tokenProvider: ITokenProvider,
+  ) {}
 
   public async execute({
     emailOrUsername,
@@ -36,7 +36,10 @@ class AuthenticateUserUseCase {
   }: IAuthenticateDTO): Promise<IResponse> {
     let user: User | undefined
 
-    if (this.isEmail(emailOrUsername)) {
+    const emailPattern = /\S+@\S+\.\S+/
+    const isEmail = (email: string): boolean => emailPattern.test(email)
+
+    if (isEmail(emailOrUsername)) {
       user = await this.usersRepository.findByEmailWithRole(emailOrUsername)
     } else {
       user = await this.usersRepository.findByUsernameWithRole(emailOrUsername)
@@ -56,7 +59,10 @@ class AuthenticateUserUseCase {
       )
     }
 
-    const passwordMatch = await compare(password, user.password)
+    const passwordMatch = await this.hashProvider.compareHash(
+      password,
+      user.password,
+    )
 
     if (!passwordMatch) {
       throw new AppException(
@@ -67,21 +73,12 @@ class AuthenticateUserUseCase {
 
     const roles = user.roles.map(role => role.name)
 
-    const token = AuthenticateUserUseCase.generateToken(user.id, roles)
+    const token = this.tokenProvider.generateToken(user.id, roles)
 
     return {
       token,
       user,
     }
-  }
-
-  static generateToken(id: string, roles: string[]): string {
-    const token = sign({ roles }, jwt.secret, {
-      subject: id,
-      expiresIn: jwt.expiresIn,
-    })
-
-    return token
   }
 }
 
