@@ -26,18 +26,16 @@ describe('Specifications Car', () => {
 
   it('Should not be able to create a new specification to the non-existent car', async () => {
     expect(async () => {
-      const car_id = generate()
-      const specifications_id = [generate()]
-
       createCarSpecificationUseCase.execute({
-        car_id,
-        specifications_id,
+        car_id: generate(),
+        specifications_id: [generate()],
       })
     }).rejects.toBeInstanceOf(AppException)
   })
 
   it('Should be able to create a new specification to the car', async () => {
     const car = await carsRepositoryInMemory.create({
+      id: generate(),
       name: generate(),
       description: generate(),
       daily_rate: 200,
@@ -57,7 +55,7 @@ describe('Specifications Car', () => {
       specifications_id: [specification.id] as string[],
     })
 
-    expect(carSpecifications).toHaveProperty('specifications')
+    expect(carSpecifications).toHaveProperty('id')
     expect(carSpecifications.specifications.length).toBe(1)
   })
 })
