@@ -17,8 +17,8 @@ class CarsImagesRepository implements ICarsImagesRepository {
     return image
   }
 
-  public async delete(image_id: string): Promise<void> {
-    await this.repository.delete(image_id)
+  public async delete(images_id: string[]): Promise<void> {
+    await this.repository.delete(images_id)
   }
 
   public async list(car_id: string): Promise<CarImage[]> {

@@ -24,3 +24,6 @@ export { CreateCarSpecificationUseCase } from './createCarSpecification/CreateCa
 
 export { UploadCarImagesController } from './uploadCarImages/UploadCarImagesController'
 export { UploadCarImagesUseCase } from './uploadCarImages/UploadCarImagesUseCase'
+
+export { DeleteCarImagesController } from './deleteCarImages/DeleteCarImagesController'
+export { DeleteCarImagesUseCase } from './deleteCarImages/DeleteCarImagesUseCase'
