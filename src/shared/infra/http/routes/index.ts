@@ -11,6 +11,7 @@ import {
   specificationsRouter,
   carsRouter,
 } from '@modules/cars/infra/http/routes'
+import { rentalRouter } from '@modules/rentals/infra/http/routes'
 
 const routes = Router()
 
@@ -24,5 +25,7 @@ routes.use('/categories', categoriesRouter)
 routes.use('/specifications', specificationsRouter)
 
 routes.use('/cars', carsRouter)
+
+routes.use('/rentals', rentalRouter)
 
 export { routes }
