@@ -22,8 +22,10 @@ interface IUploadConfig {
   }
 }
 
+const STORAGE_DRIVER = process.env.STORAGE_DRIVER || 'disk'
+
 export default {
-  driver: process.env.STORAGE_DRIVER,
+  driver: STORAGE_DRIVER,
 
   folder: (folder: string) => {
     if (folder === 'tmp') return resolve(__dirname, '..', '..', 'tmp')
