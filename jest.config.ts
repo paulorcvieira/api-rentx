@@ -18,7 +18,7 @@ export default {
   },
   setupFiles: ['dotenv/config', 'reflect-metadata'],
   testPathIgnorePatterns: ['/node_modules/'],
-  testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
+  testMatch: ['**/*.spec.ts', '**/*.test.ts'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/src',
   }),
