@@ -50,4 +50,20 @@ describe('Create Rental', () => {
       })
     }).rejects.toBeInstanceOf(AppException)
   })
+
+  test('should not be able to create a new rental if there is another open to de same car', async () => {
+    expect(async () => {
+      await createRentalUseCase.execute({
+        user_id: 'valid_user_id',
+        car_id: 'valid_car_id',
+        expected_return_date: dayAdd24Hours,
+      })
+
+      await createRentalUseCase.execute({
+        user_id: 'valid_user_id',
+        car_id: 'valid_car_id',
+        expected_return_date: dayAdd24Hours,
+      })
+    }).rejects.toBeInstanceOf(AppException)
+  })
 })
