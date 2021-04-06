@@ -60,7 +60,10 @@
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
     ],
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.js", "**/*.spec.js"]}],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {"devDependencies": ["**/*.test.js", "**/*.spec.js"]}
+    ],
     "prettier/prettier": "error"
   },
   "settings": {

@@ -7,27 +7,27 @@
     "name": "Paulo Vieira",
     "github": "https://github.com/paulorcvieira"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS && exit 1"
-    }
-  },
-  "lint-staged": {
-    "{clients,server}/**/src/**/*.ts?(x)": [
-      "yarn lint --fix",
-      "yarn test --findRelatedTests --bail"
-    ]
-  },
   "scripts": {
     "dev": "tsnd -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
-    "lint": "eslint src --ext .ts,.tsx --fix",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings=0",
     "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli",
-    "test": "NODE_ENV=test jest",
+    "test": "NODE_ENV=test jest --passWithNoTests --runInBand --no-cache",
+    "test:unit": "npm test -- --watch -c jest-unit-config.js",
+    "test:integration": "npm test -- --watch -c jest-integration-config.js",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage",
+    "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info",
     "test:watch": "yarn test --watch",
     "test:verbose": "jest --passWithNoTests --runInBand",
+    "seed:admin": "tsnd src/shared/infra/typeorm/seeds/admin.ts",
     "clear": "jest --clearCache",
-    "seed:admin": "tsnd src/shared/infra/typeorm/seeds/admin.ts"
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "src/**/*": [
+      "npm run lint --fix",
+      "npm test --findRelatedTests --bail"
+    ]
   },
   "dependencies": {
     "aws-sdk": "^2.874.0",
@@ -52,9 +52,6 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.0.1",
-    "@commitlint/config-conventional": "^12.0.1",
-    "@commitlint/core": "^11.0.0",
     "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
@@ -66,9 +63,6 @@
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
-    "commitizen": "^4.2.3",
-    "commitlint-config-gitmoji": "^2.1.10",
-    "cz-conventional-changelog": "3.3.0",
     "eslint": "^7.18.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^7.2.0",
@@ -79,7 +73,8 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.1.2",
-    "husky": "^4.3.8",
+    "git-commit-msg-linter": "^3.1.0",
+    "husky": "^6.0.0",
     "jest": "^26.6.3",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
@@ -87,10 +82,5 @@
     "ts-node-dev": "^1.1.6",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.2.3"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
