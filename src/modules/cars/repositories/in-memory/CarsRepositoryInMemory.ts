@@ -4,8 +4,12 @@ import { Car } from '@modules/cars/infra/typeorm/entities/Car'
 
 import { ICarsRepository } from '../ICarsRepository'
 
-class CarsRepositoryInMemory implements ICarsRepository {
-  cars: Car[] = []
+export class CarsRepositoryInMemory implements ICarsRepository {
+  private cars: Car[]
+
+  constructor() {
+    this.cars = []
+  }
 
   public async create(data: ICreateCarDTO): Promise<Car> {
     const car = new Car()
@@ -53,6 +57,9 @@ class CarsRepositoryInMemory implements ICarsRepository {
     const car = this.cars.find(car => car.id === car_id)
     return car
   }
-}
 
-export { CarsRepositoryInMemory }
+  async updateAvailable(car_id: string, available: boolean): Promise<void> {
+    const car = this.cars.find(car => car.id === car_id)
+    Object.assign(car, { available })
+  }
+}

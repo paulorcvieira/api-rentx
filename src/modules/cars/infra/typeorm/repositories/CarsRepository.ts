@@ -6,7 +6,7 @@ import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository'
 
 import { Car } from '../entities/Car'
 
-class CarsRepository implements ICarsRepository {
+export class CarsRepository implements ICarsRepository {
   private repository: Repository<Car>
 
   constructor() {
@@ -56,5 +56,17 @@ class CarsRepository implements ICarsRepository {
     const car = await this.repository.findOne({ id: car_id })
     return car
   }
+
+  public async updateAvailable(
+    car_id: string,
+    available: boolean,
+  ): Promise<void> {
+    await this.repository
+      .createQueryBuilder()
+      .update()
+      .set({ available })
+      .where('id = :car_id')
+      .setParameters({ car_id })
+      .execute()
+  }
 }
-export { CarsRepository }
