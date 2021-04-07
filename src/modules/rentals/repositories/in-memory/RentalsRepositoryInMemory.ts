@@ -28,6 +28,11 @@ class RentalsRepositoryInMemory implements IRentalsRepository {
     )
     return rental
   }
+
+  public async findById(car_id: string): Promise<Rental | undefined> {
+    const rental = this.rentals.find(rental => rental.car_id === car_id)
+    return rental
+  }
 }
 
 export { RentalsRepositoryInMemory }
