@@ -1,6 +1,7 @@
 import { Router } from 'express'
 
 import { DevolutionRentalController } from '@modules/rentals/useCases/devolutionRental/DevolutionRentalController'
+import { ListRentalsByUserController } from '@modules/rentals/useCases/listRentalsByUser/ListRentalsByUserController'
 import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated'
 import { is } from '@shared/infra/http/middlewares/ensurePermission'
 
@@ -10,8 +11,15 @@ const rentalRouter = Router()
 
 const createRentalController = new CreateRentalController()
 const devolutionRentalController = new DevolutionRentalController()
+const listRentalsByUserUseCase = new ListRentalsByUserController()
 
 rentalRouter.use(ensureAuthenticated)
+
+rentalRouter.get(
+  '/user',
+  is(['ROLE_ADMIN', 'ROLE_USER']),
+  listRentalsByUserUseCase.handle,
+)
 
 rentalRouter.post(
   '/',
