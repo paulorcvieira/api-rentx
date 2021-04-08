@@ -20,7 +20,7 @@ class CreateRoleController {
       return response.status(StatusCodes.CREATED).json(role)
     } catch (error) {
       return response
-        .status(StatusCodes.NOT_FOUND)
+        .status(StatusCodes.BAD_REQUEST)
         .json({ error: error.message })
     }
   }

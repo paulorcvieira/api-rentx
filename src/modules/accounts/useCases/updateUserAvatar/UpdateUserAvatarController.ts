@@ -6,14 +6,20 @@ import { UpdateUserAvatarUseCase } from './UpdateUserAvatarUseCase'
 
 class UpdateUserAvatarController {
   public async handle(request: Request, response: Response): Promise<Response> {
-    const updateUserAvatarUseCase = container.resolve(UpdateUserAvatarUseCase)
+    try {
+      const updateUserAvatarUseCase = container.resolve(UpdateUserAvatarUseCase)
 
-    const user = await updateUserAvatarUseCase.execute({
-      user_id: request.user.id,
-      avatarFilename: request.file.filename,
-    })
+      const user = await updateUserAvatarUseCase.execute({
+        user_id: request.user.id,
+        avatarFilename: request.file.filename,
+      })
 
-    return response.status(StatusCodes.CREATED).json(user)
+      return response.status(StatusCodes.CREATED).json(user)
+    } catch (error) {
+      return response
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: error.message })
+    }
   }
 }
 

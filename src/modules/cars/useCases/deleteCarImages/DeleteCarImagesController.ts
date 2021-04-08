@@ -10,15 +10,21 @@ interface ICars {
 
 class DeleteCarImagesController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { images_id } = request.body as ICars
+    try {
+      const { images_id } = request.body as ICars
 
-    const deleteCarImagesUseCase = container.resolve(DeleteCarImagesUseCase)
+      const deleteCarImagesUseCase = container.resolve(DeleteCarImagesUseCase)
 
-    await deleteCarImagesUseCase.execute({
-      images_id,
-    })
+      await deleteCarImagesUseCase.execute({
+        images_id,
+      })
 
-    return response.status(StatusCodes.NO_CONTENT).json()
+      return response.status(StatusCodes.NO_CONTENT).json()
+    } catch (error) {
+      return response
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: error.message })
+    }
   }
 }
 

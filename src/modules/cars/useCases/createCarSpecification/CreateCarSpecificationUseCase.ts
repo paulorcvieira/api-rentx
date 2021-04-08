@@ -26,7 +26,7 @@ class CreateCarSpecificationUseCase {
     if (!carExists) {
       throw new AppException(
         'This car is not registered.',
-        StatusCodes.BAD_REQUEST,
+        StatusCodes.NOT_FOUND,
       )
     }
 

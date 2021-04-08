@@ -20,7 +20,7 @@ export class DevolutionRentalController {
       return response.status(StatusCodes.OK).json(rental)
     } catch (error) {
       return response
-        .status(StatusCodes.NOT_FOUND)
+        .status(StatusCodes.BAD_REQUEST)
         .json({ error: error.message })
     }
   }

@@ -16,7 +16,7 @@ class ListSpecificationsController {
       return response.status(StatusCodes.OK).json(specifications)
     } catch (error) {
       return response
-        .status(StatusCodes.NOT_FOUND)
+        .status(StatusCodes.BAD_REQUEST)
         .json({ error: error.message })
     }
   }

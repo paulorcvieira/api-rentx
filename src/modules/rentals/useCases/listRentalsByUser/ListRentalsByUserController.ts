@@ -18,7 +18,7 @@ export class ListRentalsByUserController {
       return response.status(StatusCodes.OK).json(rentals)
     } catch (error) {
       return response
-        .status(StatusCodes.NOT_FOUND)
+        .status(StatusCodes.BAD_REQUEST)
         .json({ error: error.message })
     }
   }

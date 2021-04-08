@@ -14,7 +14,7 @@ class ListCategoriesController {
       return response.status(StatusCodes.OK).json(categories)
     } catch (error) {
       return response
-        .status(StatusCodes.NOT_FOUND)
+        .status(StatusCodes.BAD_REQUEST)
         .json({ error: error.message })
     }
   }

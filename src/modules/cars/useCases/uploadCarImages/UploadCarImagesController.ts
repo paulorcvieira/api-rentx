@@ -10,19 +10,25 @@ interface IFiles {
 
 class UploadCarImagesController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { car_id } = request.params
-    const images = request.files as IFiles[]
+    try {
+      const { car_id } = request.params
+      const images = request.files as IFiles[]
 
-    const uploadCarImagesUseCase = container.resolve(UploadCarImagesUseCase)
+      const uploadCarImagesUseCase = container.resolve(UploadCarImagesUseCase)
 
-    const images_name = images.map(file => file.filename)
+      const images_name = images.map(file => file.filename)
 
-    const car = await uploadCarImagesUseCase.execute({
-      car_id,
-      images_name,
-    })
+      const car = await uploadCarImagesUseCase.execute({
+        car_id,
+        images_name,
+      })
 
-    return response.status(StatusCodes.CREATED).json(car)
+      return response.status(StatusCodes.CREATED).json(car)
+    } catch (error) {
+      return response
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: error.message })
+    }
   }
 }
 
