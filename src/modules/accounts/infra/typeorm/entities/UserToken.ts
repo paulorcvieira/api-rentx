@@ -5,7 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Generated,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm'
+
+import { User } from './User'
 
 @Entity('user_tokens')
 class UserToken {
@@ -14,10 +18,17 @@ class UserToken {
 
   @Column()
   @Generated('uuid')
-  token: string
+  refresh_token: string
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User
 
   @Column()
   user_id: string
+
+  @Column('timestamp')
+  expires_date: Date
 
   @CreateDateColumn()
   created_at: Date
@@ -26,4 +37,4 @@ class UserToken {
   updated_at: Date
 }
 
-export default UserToken
+export { UserToken }

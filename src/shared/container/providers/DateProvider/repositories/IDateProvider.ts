@@ -4,4 +4,5 @@ export interface IDateProvider {
   convertToUTC(date: Date): string
   dateNow(): Date
   addHours(date: Date, hours: number): Date
+  addDay(date: Date, days: number): Date
 }

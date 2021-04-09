@@ -11,20 +11,22 @@ export default class CreateUserTokens1616901560695
         columns: [
           idColumn,
           {
-            name: 'token',
-            type: 'uuid',
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
+            name: 'refresh_token',
+            type: 'varchar',
           },
           {
             name: 'user_id',
             type: 'uuid',
           },
+          {
+            name: 'expires_date',
+            type: 'timestamp',
+          },
           ...timestampColumns,
         ],
         foreignKeys: [
           {
-            name: 'TokenUser',
+            name: 'fk_user_token',
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
             columnNames: ['user_id'],

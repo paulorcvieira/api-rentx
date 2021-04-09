@@ -31,4 +31,8 @@ export class DayjsDateProvider implements IDateProvider {
   public addHours(date: Date, hours: number): Date {
     return dayjs(date).add(hours, 'hours').toDate()
   }
+
+  public addDay(date: Date, days: number): Date {
+    return dayjs(date).add(days, 'days').toDate()
+  }
 }
