@@ -1,8 +1,8 @@
-import { sign } from 'jsonwebtoken'
+import { sign, verify } from 'jsonwebtoken'
 
 import { jwt } from '@config/auth-config'
 
-import ITokenProvider from '../ITokenProvider'
+import ITokenProvider, { IPayload } from '../ITokenProvider'
 
 class JwtTokenProvider implements ITokenProvider {
   public generateToken(id: string, roles: string[]): string {
@@ -29,6 +29,11 @@ class JwtTokenProvider implements ITokenProvider {
 
   public expiresRefreshTokenDays(): number {
     return jwt.expires_refresh_token_days
+  }
+
+  public verifyIsValidToken(token: string): IPayload {
+    const decode = verify(token, jwt.secret_refresh_token) as IPayload
+    return decode
   }
 }
 
