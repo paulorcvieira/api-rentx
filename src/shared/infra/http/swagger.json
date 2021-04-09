@@ -9,7 +9,7 @@
     }
   },
   "paths": {
-    "/sessions": {
+    "/accounts/sessions": {
       "post": {
         "tags": [
           "Accounts"
