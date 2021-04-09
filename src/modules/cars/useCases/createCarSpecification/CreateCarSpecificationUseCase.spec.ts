@@ -1,4 +1,5 @@
 import crypto from 'crypto'
+import { StatusCodes } from 'http-status-codes'
 
 import { CarsRepositoryInMemory } from '@modules/cars/repositories/in-memory/CarsRepositoryInMemory'
 import { SpecificationsRepositoryInMemory } from '@modules/cars/repositories/in-memory/SpecificationsRepositoryInMemory'
@@ -25,12 +26,14 @@ describe('Specifications Car', () => {
   })
 
   it('Should not be able to create a new specification to the non-existent car', async () => {
-    expect(async () => {
+    await expect(
       createCarSpecificationUseCase.execute({
         car_id: generate(),
         specifications_id: [generate()],
-      })
-    }).rejects.toBeInstanceOf(AppException)
+      }),
+    ).rejects.toEqual(
+      new AppException('This car is not registered.', StatusCodes.NOT_FOUND),
+    )
   })
 
   it('Should be able to create a new specification to the car', async () => {

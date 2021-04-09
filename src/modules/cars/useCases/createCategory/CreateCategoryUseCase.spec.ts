@@ -1,3 +1,5 @@
+import { StatusCodes } from 'http-status-codes'
+
 import AppException from '@shared/exceptions/AppException'
 
 import { CategoriesRepositoryInMemory } from '../../repositories/in-memory/CategoriesRepositoryInMemory'
@@ -29,15 +31,19 @@ describe('Create Category', () => {
     expect(categoryCreated).toHaveProperty('id')
   })
 
-  test('should not be able to create a new category with name exists', () => {
-    expect(async () => {
-      const category = {
-        name: 'Category name test',
-        description: 'Category description test',
-      }
+  test('should not be able to create a new category with name exists', async () => {
+    const category = {
+      name: 'Category name test',
+      description: 'Category description test',
+    }
 
-      await createCategoryUseCase.execute(category)
-      await createCategoryUseCase.execute(category)
-    }).rejects.toBeInstanceOf(AppException)
+    await createCategoryUseCase.execute(category)
+
+    await expect(createCategoryUseCase.execute(category)).rejects.toEqual(
+      new AppException(
+        'This category is already registered.',
+        StatusCodes.CONFLICT,
+      ),
+    )
   })
 })

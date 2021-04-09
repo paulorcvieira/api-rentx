@@ -1,3 +1,5 @@
+import { StatusCodes } from 'http-status-codes'
+
 import { Category } from '@modules/cars/infra/typeorm/entities/Category'
 import { CarsRepositoryInMemory } from '@modules/cars/repositories/in-memory/CarsRepositoryInMemory'
 import { CategoriesRepositoryInMemory } from '@modules/cars/repositories/in-memory/CategoriesRepositoryInMemory'
@@ -43,8 +45,18 @@ describe('Create Car', () => {
   })
 
   test('should not be able to register a car with a license plate already registered', async () => {
-    expect(async () => {
-      await createCarUseCase.execute({
+    await createCarUseCase.execute({
+      name: 'valid_name_two',
+      description: 'valid_description_two',
+      daily_rate: 100,
+      license_plate: 'valid_plate_two',
+      fine_amount: 60,
+      brand: 'valid_brand_two',
+      category_id: `${category.id}`,
+    })
+
+    await expect(
+      createCarUseCase.execute({
         name: 'valid_name_two',
         description: 'valid_description_two',
         daily_rate: 100,
@@ -52,18 +64,13 @@ describe('Create Car', () => {
         fine_amount: 60,
         brand: 'valid_brand_two',
         category_id: `${category.id}`,
-      })
-
-      await createCarUseCase.execute({
-        name: 'valid_name_three',
-        description: 'valid_description_three',
-        daily_rate: 100,
-        license_plate: 'valid_plate_three',
-        fine_amount: 60,
-        brand: 'valid_brand_three',
-        category_id: `${category.id}`,
-      })
-    }).rejects.toBeInstanceOf(AppException)
+      }),
+    ).rejects.toEqual(
+      new AppException(
+        'This license plate is already registered.',
+        StatusCodes.CONFLICT,
+      ),
+    )
   })
 
   test('should be able to register a car as available by default', async () => {
