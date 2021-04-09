@@ -15,7 +15,7 @@ import { rentalRouter } from '@modules/rentals/infra/http/routes'
 
 const routes = Router()
 
-routes.use('/sessions', authenticateRouter)
+routes.use('/accounts', authenticateRouter)
 
 routes.use('/users', usersRouter)
 routes.use('/permissions', permissionsRouter)
