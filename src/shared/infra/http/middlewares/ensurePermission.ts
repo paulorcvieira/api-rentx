@@ -1,18 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
 import { StatusCodes } from 'http-status-codes'
-import { verify } from 'jsonwebtoken'
-import { container } from 'tsyringe'
 
-import { jwt } from '@config/auth-config'
-import { GetUserUseCase } from '@modules/accounts/useCases/getUser/GetUserUseCase'
+import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository'
+import { JwtTokenProvider } from '@modules/accounts/providers/TokenProvider/repositories/implementations/JwtTokenProvider'
+import AppException from '@shared/exceptions/AppException'
 
-interface ITokenPayload {
-  iat: number
-  exp: number
-  sub: string
-}
-
-function is(
+export function is(
   role: string[],
 ): (
   request: Request,
@@ -25,22 +18,28 @@ function is(
     response: Response,
     next: NextFunction,
   ) => {
-    const authHeader = request.headers.authorization
-
-    if (!authHeader) {
-      throw new Error('JWT token is missing')
-    }
-
-    const [, token] = authHeader.split(' ')
-
     try {
-      const { sub } = verify(token, jwt.secret, {
-        algorithms: ['HS256'],
-      }) as ITokenPayload
+      const authHeader = request.headers.authorization
 
-      const getUserUseCase = container.resolve(GetUserUseCase)
+      if (!authHeader) {
+        throw new AppException(
+          'JWT token is missing, try again.',
+          StatusCodes.UNAUTHORIZED,
+        )
+      }
 
-      const user = await getUserUseCase.execute(sub)
+      const [, token] = authHeader.split(' ')
+
+      const jwtTokenProvider = new JwtTokenProvider()
+
+      const { sub: user_id } = jwtTokenProvider.verifyIsValidToken(
+        token,
+        'default',
+      )
+
+      const usersRepository = new UsersRepository()
+
+      const user = await usersRepository.findByIdWithRole(user_id)
 
       const userRoles = user?.roles.map(role => role.name)
 
@@ -52,13 +51,14 @@ function is(
 
       return response
         .status(StatusCodes.FORBIDDEN)
-        .json({ error: 'Not authorized' })
+        .json({ error: 'Unauthorized.' })
     } catch (error) {
-      throw new Error('Invalid JWT token')
+      throw new AppException(
+        'This JWT token is invalid, try again.',
+        StatusCodes.UNAUTHORIZED,
+      )
     }
   }
 
   return roleAuthorized
 }
-
-export { is }

@@ -26,6 +26,7 @@ export class RefreshTokenUseCase {
   public async execute(refresh_token: string): Promise<string> {
     const { sub: user_id, email } = this.tokenProvider.verifyIsValidToken(
       refresh_token,
+      'refresh',
     )
 
     const token = await this.usersTokensRepository.findByUserIdAndRefreshToken(

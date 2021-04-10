@@ -1,49 +1,58 @@
-import { verify } from 'jsonwebtoken'
+import { StatusCodes } from 'http-status-codes'
 
-import { jwt } from '@config/auth-config'
-import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository'
+import { UsersTokensRepository } from '@modules/accounts/infra/typeorm/repositories/UsersTokensRepository'
+import { JwtTokenProvider } from '@modules/accounts/providers/TokenProvider/repositories/implementations/JwtTokenProvider'
+import AppException from '@shared/exceptions/AppException'
 
 import { ExpressMiddleware } from '../../../../@types/middleware'
 
-interface ITokenPayload {
-  iat: number
-  exp: number
-  sub: string
-}
-
 const ensureAuthenticated: ExpressMiddleware = async (
   request,
-  response,
+  _response,
   next,
 ) => {
-  const authHeader = request.headers.authorization
-
-  if (!authHeader) {
-    throw new Error('JWT token is missing')
-  }
-
-  const [, token] = authHeader.split(' ')
-
   try {
-    const { sub } = verify(token, jwt.secret, {
-      algorithms: ['HS256'],
-    }) as ITokenPayload
+    const authHeader = request.headers.authorization
 
-    const usersRepository = new UsersRepository()
+    const usersTokensRepository = new UsersTokensRepository()
+    const jwtTokenProvider = new JwtTokenProvider()
 
-    const user = await usersRepository.findById(sub)
+    if (!authHeader) {
+      throw new AppException(
+        'JWT token is missing, try again.',
+        StatusCodes.UNAUTHORIZED,
+      )
+    }
+
+    const [, token] = authHeader.split(' ')
+
+    const { sub: user_id } = jwtTokenProvider.verifyIsValidToken(
+      token,
+      'default',
+    )
+
+    const user = await usersTokensRepository.findByUserIdAndRefreshToken(
+      user_id,
+      token,
+    )
 
     if (!user) {
-      throw new Error('User does not exists')
+      throw new AppException(
+        'This user does not registered, try again.',
+        StatusCodes.UNAUTHORIZED,
+      )
     }
 
     request.user = {
-      id: sub,
+      id: user_id,
     }
 
     return next()
   } catch (err) {
-    throw new Error('Invalid JWT token')
+    throw new AppException(
+      'This JWT token is invalid, try again.',
+      StatusCodes.UNAUTHORIZED,
+    )
   }
 }
 

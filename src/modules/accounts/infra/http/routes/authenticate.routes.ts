@@ -1,8 +1,9 @@
 import { Router } from 'express'
 
-import { RefreshTokenController } from '@modules/accounts/useCases/refreshToken/RefreshTokenController'
-
-import { AuthenticateUserController } from '../../../useCases'
+import {
+  AuthenticateUserController,
+  RefreshTokenController,
+} from '../../../useCases'
 
 const authenticateRouter = Router()
 
