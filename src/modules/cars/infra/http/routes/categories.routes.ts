@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import multer from 'multer'
 
-import uploadConfig from '@config/upload'
+import uploadConfig from '@config/upload-config'
 import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated'
 import { is } from '@shared/infra/http/middlewares/ensurePermission'
 

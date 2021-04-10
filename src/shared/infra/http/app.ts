@@ -5,7 +5,7 @@ import express from 'express'
 import 'express-async-errors'
 import swaggerUi from 'swagger-ui-express'
 
-import uploadConfig from '@config/upload'
+import uploadConfig from '@config/upload-config'
 import createConnection from '@shared/infra/typeorm'
 
 import generalException from './middlewares/generalException'

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import multer from 'multer'
 
-import uploadConfig from '@config/upload'
+import uploadConfig from '@config/upload-config'
 import {
   CreateCarController,
   ListAvailableCarsController,

@@ -1,6 +1,6 @@
 import { container } from 'tsyringe'
 
-import uploadConfig from '@config/upload'
+import uploadConfig from '@config/upload-config'
 
 import { DiskStorageProvider } from './repositories/implementations/DiskStorageProvider'
 import { S3StorageProvider } from './repositories/implementations/S3StorageProvider'

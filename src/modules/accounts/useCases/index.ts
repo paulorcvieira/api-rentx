@@ -14,3 +14,5 @@ export { UpdateUserAvatarController } from './updateUserAvatar/UpdateUserAvatarC
 export { UpdateUserAvatarUseCase } from './updateUserAvatar/UpdateUserAvatarUseCase'
 export { RefreshTokenController } from './refreshToken/RefreshTokenController'
 export { RefreshTokenUseCase } from './refreshToken/RefreshTokenUseCase'
+export { SendForgotPasswordMailController } from './sendForgotPasswordMail/SendForgotPasswordMailController'
+export { SendForgotPasswordMailUseCase } from './sendForgotPasswordMail/SendForgotPasswordMailUseCase'

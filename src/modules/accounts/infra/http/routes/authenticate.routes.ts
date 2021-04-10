@@ -10,7 +10,7 @@ const authenticateRouter = Router()
 const authenticateUserController = new AuthenticateUserController()
 const refreshTokenController = new RefreshTokenController()
 
-authenticateRouter.post('/sessions', authenticateUserController.handle)
+authenticateRouter.post('/', authenticateUserController.handle)
 
 authenticateRouter.post('/refresh-token', refreshTokenController.handle)
 

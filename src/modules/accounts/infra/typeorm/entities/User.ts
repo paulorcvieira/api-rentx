@@ -8,7 +8,7 @@ import {
   JoinTable,
 } from 'typeorm'
 
-import uploadConfig from '../../../../../config/upload'
+import uploadConfig from '../../../../../config/upload-config'
 import { Role } from './Role'
 
 @Entity('users')

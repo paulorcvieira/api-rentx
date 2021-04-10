@@ -3,7 +3,7 @@ import fs from 'fs'
 import mime from 'mime'
 import path from 'path'
 
-import uploadConfig from '@config/upload'
+import uploadConfig from '@config/upload-config'
 
 import { IStorageProvider } from '../IStorageProvider'
 

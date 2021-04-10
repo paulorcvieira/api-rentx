@@ -5,6 +5,7 @@ import {
   authenticateRouter,
   rolesRouter,
   permissionsRouter,
+  passwordRouter,
 } from '@modules/accounts/infra/http/routes'
 import {
   categoriesRouter,
@@ -15,7 +16,8 @@ import { rentalRouter } from '@modules/rentals/infra/http/routes'
 
 const routes = Router()
 
-routes.use('/accounts', authenticateRouter)
+routes.use('/sessions', authenticateRouter)
+routes.use('/password', passwordRouter)
 
 routes.use('/users', usersRouter)
 routes.use('/permissions', permissionsRouter)
