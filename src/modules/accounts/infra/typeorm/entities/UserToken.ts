@@ -30,6 +30,9 @@ class UserToken {
   @Column('timestamp')
   expires_date: Date
 
+  @Column()
+  ip_address: string
+
   @CreateDateColumn()
   created_at: Date
 

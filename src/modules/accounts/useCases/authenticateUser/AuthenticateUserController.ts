@@ -8,12 +8,14 @@ class AuthenticateUserController {
   public async handle(request: Request, response: Response): Promise<Response> {
     try {
       const { emailOrUsername, password } = request.body
+      const ip_address = request.ip
 
       const authenticateUserUseCase = container.resolve(AuthenticateUserUseCase)
 
       const authenticate = await authenticateUserUseCase.execute({
         emailOrUsername,
         password,
+        ip_address,
       })
 
       return response.status(StatusCodes.CREATED).json(authenticate)
@@ -24,4 +26,5 @@ class AuthenticateUserController {
     }
   }
 }
+
 export { AuthenticateUserController }

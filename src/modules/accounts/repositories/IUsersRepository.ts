@@ -3,8 +3,8 @@ import { User } from '../infra/typeorm/entities/User'
 
 interface IUsersRepository {
   create(data: IUserDTO): Promise<User>
-  findById(id: string): Promise<User | undefined>
-  findByIdWithRole(id: string): Promise<User | undefined>
+  findById(user_id: string): Promise<User | undefined>
+  findByIdWithRole(user_id: string): Promise<User | undefined>
   findByUsername(username: string): Promise<User | undefined>
   findByUsernameWithRole(username: string): Promise<User | undefined>
   findByEmail(email: string): Promise<User | undefined>

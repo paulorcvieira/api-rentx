@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
 import { idColumn, timestampColumns } from '../utils'
 
-export default class CreateUserTokens1616901560695
+export default class CreateUserTokens1618058383190
   implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
@@ -21,6 +21,10 @@ export default class CreateUserTokens1616901560695
           {
             name: 'expires_date',
             type: 'timestamp',
+          },
+          {
+            name: 'ip_address',
+            type: 'varchar',
           },
           ...timestampColumns,
         ],

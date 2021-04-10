@@ -42,6 +42,7 @@ class AuthenticateUserUseCase {
   public async execute({
     emailOrUsername,
     password,
+    ip_address,
   }: IAuthenticateDTO): Promise<IResponse> {
     let user: User | undefined
 
@@ -100,6 +101,7 @@ class AuthenticateUserUseCase {
       user_id: user.id,
       refresh_token,
       expires_date: refreshTokenExpiresDate,
+      ip_address,
     })
 
     const token = this.tokenProvider.generateToken(user.id, roles)

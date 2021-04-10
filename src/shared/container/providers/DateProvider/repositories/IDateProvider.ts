@@ -5,4 +5,5 @@ export interface IDateProvider {
   dateNow(): Date
   addHours(date: Date, hours: number): Date
   addDay(date: Date, days: number): Date
+  compareIfBefore(start_date: Date, end_date: Date): boolean
 }

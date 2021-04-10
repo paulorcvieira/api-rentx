@@ -3,12 +3,13 @@ import { hash, compare } from 'bcrypt'
 import IHashProvider from '../IHashProvider'
 
 class BCryptHashProvider implements IHashProvider {
-  public async generateHash(payload: string): Promise<string> {
-    return hash(payload, 8)
+  public async generateHash(password: string): Promise<string> {
+    const passwordHash = await hash(password, 8)
+    return passwordHash
   }
 
-  public async compareHash(payload: string, hashed: string): Promise<boolean> {
-    return compare(payload, hashed)
+  public async compareHash(password: string, hashed: string): Promise<boolean> {
+    return compare(password, hashed)
   }
 }
 

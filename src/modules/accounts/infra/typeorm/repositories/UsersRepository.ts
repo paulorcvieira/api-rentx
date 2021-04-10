@@ -36,13 +36,13 @@ class UsersRepository implements IUsersRepository {
     return user
   }
 
-  public async findById(id: string): Promise<User | undefined> {
-    const user = await this.repository.findOne(id)
+  public async findById(user_id: string): Promise<User | undefined> {
+    const user = await this.repository.findOne(user_id)
     return user
   }
 
-  public async findByIdWithRole(id: string): Promise<User | undefined> {
-    const user = await this.repository.findOne(id, {
+  public async findByIdWithRole(user_id: string): Promise<User | undefined> {
+    const user = await this.repository.findOne(user_id, {
       relations: ['roles'],
     })
     return user

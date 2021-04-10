@@ -4,7 +4,7 @@ import handlebars from 'handlebars'
 import { IParseMailTemplateDTO } from '../../dtos/IParseMailTemplateDTO'
 import { IMailTemplateProvider } from '../IMailTemplateProvider'
 
-export class HandlebarsMailTemplateProvider implements IMailTemplateProvider {
+export class MailTemplateProvider implements IMailTemplateProvider {
   public async parse({
     file,
     variables,

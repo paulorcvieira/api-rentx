@@ -16,11 +16,13 @@ export class UsersTokensRepository implements IUsersTokensRepository {
     user_id,
     refresh_token,
     expires_date,
+    ip_address,
   }: ICreateUserTokenDTO): Promise<UserToken> {
     const userToken = this.repository.create({
       user_id,
       refresh_token,
       expires_date,
+      ip_address,
     })
 
     await this.repository.save(userToken)
@@ -28,11 +30,23 @@ export class UsersTokensRepository implements IUsersTokensRepository {
     return userToken
   }
 
+  public async findByUserId(user_id: string): Promise<UserToken | undefined> {
+    const token = await this.repository.findOne({ user_id })
+    return token
+  }
+
   public async findByUserIdAndRefreshToken(
     user_id: string,
     refresh_token: string,
   ): Promise<UserToken | undefined> {
     const token = this.repository.findOne({ user_id, refresh_token })
+    return token
+  }
+
+  public async findByRefreshToken(
+    refresh_token: string,
+  ): Promise<UserToken | undefined> {
+    const token = await this.repository.findOne({ refresh_token })
     return token
   }
 

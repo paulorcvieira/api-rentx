@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import { resolve } from 'path'
 import { inject, injectable } from 'tsyringe'
+import { v4 as uuidV4 } from 'uuid'
 
 import ITokenProvider from '@modules/accounts/providers/TokenProvider/repositories/ITokenProvider'
 import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository'
@@ -8,6 +9,11 @@ import { IUsersTokensRepository } from '@modules/accounts/repositories/IUsersTok
 import { IDateProvider } from '@shared/container/providers/DateProvider/repositories/IDateProvider'
 import { IMailProvider } from '@shared/container/providers/MailProvider/repositories/IMailProvider'
 import AppException from '@shared/exceptions/AppException'
+
+interface IRequest {
+  email: string
+  ip_address: string
+}
 
 @injectable()
 export class SendForgotPasswordMailUseCase {
@@ -28,7 +34,7 @@ export class SendForgotPasswordMailUseCase {
     private mailProvider: IMailProvider,
   ) {}
 
-  public async execute(email: string): Promise<void> {
+  public async execute({ email, ip_address }: IRequest): Promise<void> {
     const user = await this.usersRepository.findByEmailWithRole(email)
 
     if (!user) {
@@ -38,13 +44,13 @@ export class SendForgotPasswordMailUseCase {
       )
     }
 
-    const roles = user.roles.map(role => role.name)
+    const oldToken = await this.usersTokensRepository.findByUserId(user.id)
 
-    const refresh_token = this.tokenProvider.generateRefreshToken(
-      user.id,
-      user.email,
-      roles,
-    )
+    if (oldToken) {
+      await this.usersTokensRepository.deleteByTokenId(oldToken.id)
+    }
+
+    const refresh_token = uuidV4()
 
     const dateNow = this.dateProvider.dateNow()
 
@@ -54,6 +60,7 @@ export class SendForgotPasswordMailUseCase {
       refresh_token,
       expires_date,
       user_id: user.id,
+      ip_address,
     })
 
     const forgotPasswordTemplate = resolve(
@@ -75,7 +82,8 @@ export class SendForgotPasswordMailUseCase {
         file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          link: `${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/password/reset?token=${refresh_token}`,
+          logo_link: `${process.env.SERVER_HOST}:${process.env.SERVER_PORT}/files/images/oUAKMC5.png`,
+          link: `${process.env.APP_WEB_HOST}/password/reset?token=${refresh_token}`,
         },
       },
     })

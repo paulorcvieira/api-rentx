@@ -7,6 +7,11 @@ import { IUsersTokensRepository } from '@modules/accounts/repositories/IUsersTok
 import { IDateProvider } from '@shared/container/providers/DateProvider/repositories/IDateProvider'
 import AppException from '@shared/exceptions/AppException'
 
+interface IRequest {
+  refresh_token: string
+  ip_address: string
+}
+
 @injectable()
 export class RefreshTokenUseCase {
   constructor(
@@ -23,7 +28,10 @@ export class RefreshTokenUseCase {
     private dateProvider: IDateProvider,
   ) {}
 
-  public async execute(refresh_token: string): Promise<string> {
+  public async execute({
+    refresh_token,
+    ip_address,
+  }: IRequest): Promise<string> {
     const { sub: user_id, email } = this.tokenProvider.verifyIsValidToken(
       refresh_token,
       'refresh',
@@ -72,6 +80,7 @@ export class RefreshTokenUseCase {
       user_id,
       refresh_token: refreshToken,
       expires_date: refreshTokenExpiresDate,
+      ip_address,
     })
 
     return refreshToken
