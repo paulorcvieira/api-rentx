@@ -1,8 +1,11 @@
+import { StatusCodes } from 'http-status-codes'
+
 import BCryptHashProvider from '@modules/accounts/providers/HashProvider/repositories/implementations/BCryptHashProvider'
 import { JwtTokenProvider } from '@modules/accounts/providers/TokenProvider/repositories/implementations/JwtTokenProvider'
 import { UsersRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersRepositoryInMemory'
 import { UsersTokensRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersTokensRepositoryInMemory'
 import { DayjsDateProvider } from '@shared/container/providers/DateProvider/repositories/implementations/DayjsDateProvider'
+import AppException from '@shared/exceptions/AppException'
 
 import { AuthenticateUserUseCase } from './AuthenticateUserUseCase'
 
@@ -59,5 +62,20 @@ describe('Authenticate User', () => {
     })
 
     expect(session).toHaveProperty('refresh_token')
+  })
+
+  it('should not be able to authenticate an nonexistent user', async () => {
+    await expect(
+      authenticateUserUseCase.execute({
+        emailOrUsername: 'invalid_email@test.com',
+        password: 'valid_password',
+        ip_address: 'valid_ip',
+      }),
+    ).rejects.toEqual(
+      new AppException(
+        'Incorrect credentials, try again.',
+        StatusCodes.UNAUTHORIZED,
+      ),
+    )
   })
 })
