@@ -13,7 +13,6 @@ const ensureAuthenticated: ExpressMiddleware = async (
 ) => {
   try {
     const authHeader = request.headers.authorization
-
     const usersTokensRepository = new UsersTokensRepository()
     const jwtTokenProvider = new JwtTokenProvider()
 
@@ -28,7 +27,7 @@ const ensureAuthenticated: ExpressMiddleware = async (
 
     const { sub: user_id } = jwtTokenProvider.verifyIsValidToken(
       token,
-      'default',
+      'refresh',
     )
 
     const user = await usersTokensRepository.findByUserIdAndRefreshToken(

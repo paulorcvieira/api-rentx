@@ -46,6 +46,7 @@ export class JwtTokenProvider implements ITokenProvider {
     const decode = verify(token, secret, {
       algorithms: ['HS256'],
     }) as IPayload
+
     return decode
   }
 }

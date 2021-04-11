@@ -12,6 +12,10 @@ interface IRequest {
   ip_address: string
 }
 
+interface IResponse {
+  refresh_token: string
+}
+
 @injectable()
 export class RefreshTokenUseCase {
   constructor(
@@ -31,7 +35,7 @@ export class RefreshTokenUseCase {
   public async execute({
     refresh_token,
     ip_address,
-  }: IRequest): Promise<string> {
+  }: IRequest): Promise<IResponse> {
     const { sub: user_id, email } = this.tokenProvider.verifyIsValidToken(
       refresh_token,
       'refresh',
@@ -83,6 +87,6 @@ export class RefreshTokenUseCase {
       ip_address,
     })
 
-    return refreshToken
+    return { refresh_token: refreshToken }
   }
 }
