@@ -73,4 +73,35 @@ describe('Send Forgot Password', () => {
       new AppException('This user does not registered.', StatusCodes.NOT_FOUND),
     )
   })
+
+  it('should be able to create an users token.', async () => {
+    const generateTokenMail = spyOn(usersTokensRepositoryInMemory, 'create')
+
+    await usersRepositoryInMemory.create({
+      driver_license: 'valid_licence_driver',
+      email: 'valid_email@test.com',
+      name: 'valid_name',
+      password: 'valid_password',
+      username: 'valid_username',
+      roles: [
+        {
+          name: 'valid_role_name',
+          description: 'valid_role_description',
+          permissions: [
+            {
+              name: 'valid_permission_name',
+              description: 'valid_permission_description',
+            },
+          ],
+        },
+      ],
+    })
+
+    await sendForgotPasswordMailUseCase.execute({
+      email: 'valid_email@test.com',
+      ip_address: 'valid_ip',
+    })
+
+    expect(generateTokenMail).toHaveBeenCalled()
+  })
 })
