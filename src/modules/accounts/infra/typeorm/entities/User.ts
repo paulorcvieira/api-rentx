@@ -7,6 +7,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm'
+import { v4 as uuidV4 } from 'uuid'
 
 import uploadConfig from '../../../../../config/upload-config'
 import { Role } from './Role'
@@ -63,6 +64,13 @@ class User {
         return `https://${uploadConfig.config.aws.bucket}.s3.amazonaws.com/${this.avatar}`
       default:
         return null
+    }
+  }
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuidV4()
+      this.status = true
     }
   }
 }
