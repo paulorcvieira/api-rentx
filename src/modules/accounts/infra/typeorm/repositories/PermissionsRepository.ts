@@ -1,6 +1,6 @@
 import { getRepository, Repository } from 'typeorm'
 
-import { IPermissionDTO } from '@modules/accounts/dtos/IPermissionDTO'
+import { ICreatePermissionDTO } from '@modules/accounts/dtos/ICreatePermissionDTO'
 import { IPermissionsRepository } from '@modules/accounts/repositories/IPermissionsRepository'
 
 import { Permission } from '../entities/Permission'
@@ -15,7 +15,7 @@ class PermissionsRepository implements IPermissionsRepository {
   public async create({
     name,
     description,
-  }: IPermissionDTO): Promise<Permission> {
+  }: ICreatePermissionDTO): Promise<Permission> {
     const permission = this.repository.create({ name, description })
     await this.repository.save(permission)
     return permission
@@ -26,7 +26,9 @@ class PermissionsRepository implements IPermissionsRepository {
     return permission
   }
 
-  public async findById(permissions: IPermissionDTO[]): Promise<Permission[]> {
+  public async findById(
+    permissions: ICreatePermissionDTO[],
+  ): Promise<Permission[]> {
     const role = await this.repository.findByIds(permissions)
     return role
   }

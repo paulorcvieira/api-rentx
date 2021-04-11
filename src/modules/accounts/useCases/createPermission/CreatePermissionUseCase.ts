@@ -4,7 +4,7 @@ import { injectable, inject } from 'tsyringe'
 import { Permission } from '@modules/accounts/infra/typeorm/entities/Permission'
 import AppException from '@shared/exceptions/AppException'
 
-import { IPermissionDTO } from '../../dtos/IPermissionDTO'
+import { ICreatePermissionDTO } from '../../dtos/ICreatePermissionDTO'
 import { IPermissionsRepository } from '../../repositories/IPermissionsRepository'
 
 @injectable()
@@ -17,7 +17,7 @@ class CreatePermissionUseCase {
   public async execute({
     name,
     description,
-  }: IPermissionDTO): Promise<Permission> {
+  }: ICreatePermissionDTO): Promise<Permission> {
     const permissionExists = await this.permissionsRepository.findByName(name)
 
     if (permissionExists) {

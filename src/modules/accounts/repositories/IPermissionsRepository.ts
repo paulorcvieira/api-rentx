@@ -1,10 +1,10 @@
-import { IPermissionDTO } from '../dtos/IPermissionDTO'
+import { ICreatePermissionDTO } from '../dtos/ICreatePermissionDTO'
 import { Permission } from '../infra/typeorm/entities/Permission'
 
 interface IPermissionsRepository {
-  create(data: IPermissionDTO): Promise<Permission>
+  create(data: ICreatePermissionDTO): Promise<Permission>
   findByName(name: string): Promise<Permission | undefined>
-  findById(permissions: IPermissionDTO[]): Promise<Permission[]>
+  findById(permissions: ICreatePermissionDTO[]): Promise<Permission[]>
   list(): Promise<Permission[]>
 }
 

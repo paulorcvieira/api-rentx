@@ -1,10 +1,10 @@
-import { IRoleDTO } from '../dtos/IRoleDTO'
+import { ICreateRoleDTO } from '../dtos/ICreateRoleDTO'
 import { Role } from '../infra/typeorm/entities/Role'
 
 interface IRolesRepository {
-  create(data: IRoleDTO): Promise<Role>
+  create(data: ICreateRoleDTO): Promise<Role>
   findByName(name: string): Promise<Role | undefined>
-  findById(data: IRoleDTO[]): Promise<Role[]>
+  findById(data: ICreateRoleDTO[]): Promise<Role[]>
   list(): Promise<Role[]>
 }
 

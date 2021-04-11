@@ -5,7 +5,7 @@ import { User } from '@modules/accounts/infra/typeorm/entities/User'
 import IHashProvider from '@modules/accounts/providers/HashProvider/repositories/IHashProvider'
 import AppException from '@shared/exceptions/AppException'
 
-import { IUserDTO } from '../../dtos/IUserDTO'
+import { ICreateUserDTO } from '../../dtos/ICreateUserDTO'
 import { IRolesRepository } from '../../repositories/IRolesRepository'
 import { IUsersRepository } from '../../repositories/IUsersRepository'
 
@@ -29,7 +29,7 @@ class CreateUserUseCase {
     email,
     driver_license,
     roles,
-  }: IUserDTO): Promise<User> {
+  }: ICreateUserDTO): Promise<User> {
     if (password && password.length < 6) {
       throw new AppException(
         'Password must be at least 6 characters.',

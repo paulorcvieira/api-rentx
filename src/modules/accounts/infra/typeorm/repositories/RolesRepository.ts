@@ -1,6 +1,6 @@
 import { getRepository, Repository } from 'typeorm'
 
-import { IRoleDTO } from '@modules/accounts/dtos/IRoleDTO'
+import { ICreateRoleDTO } from '@modules/accounts/dtos/ICreateRoleDTO'
 import { IRolesRepository } from '@modules/accounts/repositories/IRolesRepository'
 
 import { Role } from '../entities/Role'
@@ -16,7 +16,7 @@ class RolesRepository implements IRolesRepository {
     name,
     description,
     permissions,
-  }: IRoleDTO): Promise<Role> {
+  }: ICreateRoleDTO): Promise<Role> {
     const role = this.repository.create({ name, description, permissions })
     await this.repository.save(role)
     return role
@@ -27,7 +27,7 @@ class RolesRepository implements IRolesRepository {
     return role
   }
 
-  public async findById(roles: IRoleDTO[]): Promise<Role[]> {
+  public async findById(roles: ICreateRoleDTO[]): Promise<Role[]> {
     const role = await this.repository.findByIds(roles)
     return role
   }

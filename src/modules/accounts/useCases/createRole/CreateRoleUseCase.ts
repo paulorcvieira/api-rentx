@@ -4,7 +4,7 @@ import { injectable, inject } from 'tsyringe'
 import { Role } from '@modules/accounts/infra/typeorm/entities/Role'
 import AppException from '@shared/exceptions/AppException'
 
-import { IRoleDTO } from '../../dtos/IRoleDTO'
+import { ICreateRoleDTO } from '../../dtos/ICreateRoleDTO'
 import { IPermissionsRepository } from '../../repositories/IPermissionsRepository'
 import { IRolesRepository } from '../../repositories/IRolesRepository'
 
@@ -22,7 +22,7 @@ class CreateRoleUseCase {
     name,
     description,
     permissions,
-  }: IRoleDTO): Promise<Role> {
+  }: ICreateRoleDTO): Promise<Role> {
     const permissionExists = await this.rolesRepository.findByName(name)
 
     if (permissionExists) {

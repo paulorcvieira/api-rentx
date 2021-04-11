@@ -1,14 +1,12 @@
-import { IRoleDTO } from './IRoleDTO'
+import { ICreateRoleDTO } from './ICreateRoleDTO'
 
-interface IUserDTO {
+export interface ICreateUserDTO {
   name: string
   username: string
   password: string
   email: string
   driver_license: string
-  roles: IRoleDTO[]
+  roles: ICreateRoleDTO[]
   id?: string
   avatar?: string
 }
-
-export { IUserDTO }
