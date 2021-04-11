@@ -34,7 +34,7 @@ describe('Authenticate User', () => {
     password_hash = await hashProvider.generateHash('valid_password')
   })
 
-  it('should be able to authenticate an user', async () => {
+  it('should be able to authenticate an user.', async () => {
     await usersRepositoryInMemory.create({
       driver_license: 'valid_licence_driver',
       email: 'valid_email@test.com',
@@ -64,11 +64,46 @@ describe('Authenticate User', () => {
     expect(session).toHaveProperty('refresh_token')
   })
 
-  it('should not be able to authenticate an nonexistent user', async () => {
+  it('should not be able to authenticate an nonexistent user.', async () => {
     await expect(
       authenticateUserUseCase.execute({
         emailOrUsername: 'invalid_email@test.com',
         password: 'valid_password',
+        ip_address: 'valid_ip',
+      }),
+    ).rejects.toEqual(
+      new AppException(
+        'Incorrect credentials, try again.',
+        StatusCodes.UNAUTHORIZED,
+      ),
+    )
+  })
+
+  it('should not be able to authenticate with incorrect password.', async () => {
+    await usersRepositoryInMemory.create({
+      driver_license: 'valid_licence_driver',
+      email: 'valid_email@test.com',
+      name: 'valid_name',
+      password: password_hash,
+      username: 'valid_username',
+      roles: [
+        {
+          name: 'valid_role_name',
+          description: 'valid_role_description',
+          permissions: [
+            {
+              name: 'valid_permission_name',
+              description: 'valid_permission_description',
+            },
+          ],
+        },
+      ],
+    })
+
+    await expect(
+      authenticateUserUseCase.execute({
+        emailOrUsername: 'valid_email@test.com',
+        password: 'invalid_password',
         ip_address: 'valid_ip',
       }),
     ).rejects.toEqual(
