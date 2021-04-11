@@ -1,8 +1,11 @@
+import { StatusCodes } from 'http-status-codes'
+
 import { JwtTokenProvider } from '@modules/accounts/providers/TokenProvider/repositories/implementations/JwtTokenProvider'
 import { UsersRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersRepositoryInMemory'
 import { UsersTokensRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersTokensRepositoryInMemory'
 import { DayjsDateProvider } from '@shared/container/providers/DateProvider/repositories/implementations/DayjsDateProvider'
 import { MailProviderInMemory } from '@shared/container/providers/MailProvider/repositories/in-memory/MailProviderInMemory'
+import AppException from '@shared/exceptions/AppException'
 
 import { SendForgotPasswordMailUseCase } from './SendForgotPasswordMailUseCase'
 
@@ -58,5 +61,16 @@ describe('Send Forgot Password', () => {
     })
 
     expect(sendMail).toHaveBeenCalled()
+  })
+
+  it('should not be able to send an email if user does not exists.', async () => {
+    await expect(
+      sendForgotPasswordMailUseCase.execute({
+        email: 'invalid_email@test.com',
+        ip_address: 'valid_ip',
+      }),
+    ).rejects.toEqual(
+      new AppException('This user does not registered.', StatusCodes.NOT_FOUND),
+    )
   })
 })
