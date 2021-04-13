@@ -5,6 +5,8 @@ import { resolve } from 'path'
 interface IUploadConfig {
   driver: 's3' | 'disk'
 
+  tmpFolder: string
+
   folder: (folder: string) => string
 
   upload(
@@ -27,15 +29,16 @@ const STORAGE_DRIVER = process.env.STORAGE_DRIVER || 'disk'
 export default {
   driver: STORAGE_DRIVER,
 
+  tmpFolder: resolve(__dirname, '..', '..', 'tmp'),
+
   folder: (folder: string) => {
-    if (folder === 'tmp') return resolve(__dirname, '..', '..', 'tmp')
     return resolve(__dirname, '..', '..', 'tmp', folder)
   },
 
   upload: (folder: string) => {
     return {
       storage: multer.diskStorage({
-        destination: resolve(__dirname, '..', '..', folder),
+        destination: resolve(__dirname, '..', '..', 'tmp', folder),
         filename: (request, file, callback) => {
           const fileHash = crypto.randomBytes(16).toString('hex')
           const fileName = `${fileHash}-${file.originalname}`
