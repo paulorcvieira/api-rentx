@@ -1,7 +1,7 @@
 import aws, { S3 } from 'aws-sdk'
 import fs from 'fs'
 import mime from 'mime'
-import path from 'path'
+import { resolve } from 'path'
 
 import uploadConfig from '@config/upload-config'
 
@@ -17,7 +17,7 @@ export class S3StorageProvider implements IStorageProvider {
   }
 
   public async saveFile(folder: string, file: string): Promise<string> {
-    const originalPath = path.resolve(uploadConfig.folder(folder), file)
+    const originalPath = resolve(uploadConfig.folder(folder), file)
 
     const ContentType = mime.lookup(originalPath)
 
@@ -29,7 +29,7 @@ export class S3StorageProvider implements IStorageProvider {
 
     await this.client
       .putObject({
-        Bucket: uploadConfig.config.aws.bucket,
+        Bucket: `${uploadConfig.config.aws.bucket}/${folder}`,
         Key: file,
         ACL: 'public-read',
         Body: fileContent,
@@ -42,10 +42,10 @@ export class S3StorageProvider implements IStorageProvider {
     return file
   }
 
-  public async deleteFile(_folder: string, file: string): Promise<void> {
+  public async deleteFile(folder: string, file: string): Promise<void> {
     await this.client
       .deleteObject({
-        Bucket: uploadConfig.config.aws.bucket,
+        Bucket: `${uploadConfig.config.aws.bucket}/${folder}`,
         Key: file,
       })
       .promise()
