@@ -1,7 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import { inject, injectable } from 'tsyringe'
 
-import uploadConfig from '@config/upload-config'
 import { User } from '@modules/accounts/infra/typeorm/entities/User'
 import { IStorageProvider } from '@shared/container/providers/StorageProvider/repositories/IStorageProvider'
 import AppException from '@shared/exceptions/AppException'
@@ -36,7 +35,7 @@ class UpdateUserAvatarUseCase {
       )
     }
 
-    const folder = uploadConfig.folder('avatar')
+    const folder = 'avatar'
 
     if (user.avatar) {
       await this.storageProvider.deleteFile(folder, user.avatar)

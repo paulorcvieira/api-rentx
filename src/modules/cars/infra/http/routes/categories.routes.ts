@@ -13,7 +13,7 @@ import {
 
 const categoriesRouter = Router()
 
-const upload = multer(uploadConfig.upload('./tmp/categories'))
+const upload = multer(uploadConfig.upload('categories'))
 
 const listCategoriesController = new ListCategoriesController()
 const createCategoriesController = new CreateCategoryController()

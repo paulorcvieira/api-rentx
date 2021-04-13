@@ -14,7 +14,7 @@ import { is } from '@shared/infra/http/middlewares/ensurePermission'
 
 const carsRouter = Router()
 
-const upload = multer(uploadConfig.upload('./tmp/categories'))
+const upload = multer(uploadConfig.upload('cars'))
 
 const createCarController = new CreateCarController()
 const listAvailableCarsController = new ListAvailableCarsController()
@@ -42,7 +42,7 @@ carsRouter.post(
 )
 
 carsRouter.delete(
-  '/images',
+  '/images/:car_id',
   is(['ROLE_ADMIN']),
   deleteCarImagesController.handle,
 )

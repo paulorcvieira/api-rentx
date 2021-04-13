@@ -18,12 +18,9 @@ class UploadCarImagesController {
 
       const images_name = images.map(file => file.filename)
 
-      const car = await uploadCarImagesUseCase.execute({
-        car_id,
-        images_name,
-      })
+      await uploadCarImagesUseCase.execute({ car_id, images_name })
 
-      return response.status(StatusCodes.CREATED).json(car)
+      return response.status(StatusCodes.CREATED).json()
     } catch (error) {
       return response
         .status(StatusCodes.BAD_REQUEST)

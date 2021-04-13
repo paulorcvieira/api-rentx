@@ -4,19 +4,15 @@ import { container } from 'tsyringe'
 
 import { DeleteCarImagesUseCase } from './DeleteCarImagesUseCase'
 
-interface ICars {
-  images_id: string[]
-}
-
 class DeleteCarImagesController {
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const { images_id } = request.body as ICars
+      const { car_id } = request.params
 
       const deleteCarImagesUseCase = container.resolve(DeleteCarImagesUseCase)
 
       await deleteCarImagesUseCase.execute({
-        images_id,
+        car_id,
       })
 
       return response.status(StatusCodes.NO_CONTENT).json()
