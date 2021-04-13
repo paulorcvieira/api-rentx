@@ -10,3 +10,5 @@ coverage
 arquivo.csv
 yarn.lock
 package-lock.json
+tmp/**/*
+!tmp/**/.gitkeep
