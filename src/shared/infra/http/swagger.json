@@ -493,9 +493,8 @@
     "Session": {
       "type": "object",
       "properties": {
-        "email": {
-          "type": "string",
-          "format": "email"
+        "emailOrUsername": {
+          "type": "string"
         },
         "password": {
           "type": "string",
@@ -503,7 +502,7 @@
         }
       },
       "example": {
-        "email": "email@example.com",
+        "emailOrUsername": "email@example.com",
         "password": "password"
       }
     },
