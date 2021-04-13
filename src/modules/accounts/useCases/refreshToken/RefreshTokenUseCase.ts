@@ -12,7 +12,8 @@ interface IRequest {
   ip_address: string
 }
 
-interface IResponse {
+interface ITokenResponse {
+  token: string
   refresh_token: string
 }
 
@@ -35,7 +36,7 @@ export class RefreshTokenUseCase {
   public async execute({
     refresh_token,
     ip_address,
-  }: IRequest): Promise<IResponse> {
+  }: IRequest): Promise<ITokenResponse> {
     const { sub: user_id, email } = this.tokenProvider.verifyIsValidToken(
       refresh_token,
       'refresh',
@@ -87,6 +88,11 @@ export class RefreshTokenUseCase {
       ip_address,
     })
 
-    return { refresh_token: refreshToken }
+    const newToken = this.tokenProvider.generateToken(user.id, roles)
+
+    return {
+      token: newToken,
+      refresh_token: refreshToken,
+    }
   }
 }

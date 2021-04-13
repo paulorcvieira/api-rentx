@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
 import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository'
-import { JwtTokenProvider } from '@modules/accounts/providers/TokenProvider/repositories/implementations/JwtTokenProvider'
 import AppException from '@shared/exceptions/AppException'
 
 export function is(
@@ -19,39 +18,30 @@ export function is(
     next: NextFunction,
   ) => {
     try {
-      const authHeader = request.headers.authorization
-
-      if (!authHeader) {
-        throw new AppException(
-          'JWT token is missing, try again.',
-          StatusCodes.UNAUTHORIZED,
-        )
-      }
-
-      const [, token] = authHeader.split(' ')
-
-      const jwtTokenProvider = new JwtTokenProvider()
-
-      const { sub: user_id } = jwtTokenProvider.verifyIsValidToken(
-        token,
-        'refresh',
-      )
+      const user_id = request.user.id
 
       const usersRepository = new UsersRepository()
 
       const user = await usersRepository.findByIdWithRole(user_id)
 
-      const userRoles = user?.roles.map(role => role.name)
-
-      const existsRoles = userRoles?.some(r => role.includes(r))
-
-      if (existsRoles) {
-        return next()
+      if (!user) {
+        throw new AppException(
+          'This user does not registered, try again.',
+          StatusCodes.UNAUTHORIZED,
+        )
       }
 
-      return response
-        .status(StatusCodes.FORBIDDEN)
-        .json({ error: 'Unauthorized.' })
+      const userRoles = user.roles.map(role => role.name)
+
+      const existsRoles = userRoles.some(r => role.includes(r))
+
+      if (!existsRoles) {
+        return response
+          .status(StatusCodes.FORBIDDEN)
+          .json({ error: 'This user has no access rules, try later.' })
+      }
+
+      return next()
     } catch (error) {
       throw new AppException(
         'This JWT token is invalid, try again.',

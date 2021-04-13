@@ -1,6 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
 
-import { UsersTokensRepository } from '@modules/accounts/infra/typeorm/repositories/UsersTokensRepository'
 import { JwtTokenProvider } from '@modules/accounts/providers/TokenProvider/repositories/implementations/JwtTokenProvider'
 import AppException from '@shared/exceptions/AppException'
 
@@ -13,7 +12,6 @@ const ensureAuthenticated: ExpressMiddleware = async (
 ) => {
   try {
     const authHeader = request.headers.authorization
-    const usersTokensRepository = new UsersTokensRepository()
     const jwtTokenProvider = new JwtTokenProvider()
 
     if (!authHeader) {
@@ -27,20 +25,8 @@ const ensureAuthenticated: ExpressMiddleware = async (
 
     const { sub: user_id } = jwtTokenProvider.verifyIsValidToken(
       token,
-      'refresh',
+      'default',
     )
-
-    const user = await usersTokensRepository.findByUserIdAndRefreshToken(
-      user_id,
-      token,
-    )
-
-    if (!user) {
-      throw new AppException(
-        'This user does not registered, try again.',
-        StatusCodes.UNAUTHORIZED,
-      )
-    }
 
     request.user = {
       id: user_id,
