@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
   database:
@@ -14,24 +14,32 @@ services:
     volumes:
       - pgdata:/data/postgres
 
-  app:
-    container_name: api_rentx
-    build: .
-    restart: always
+  redis:
+    container_name: redis_rentx
+    image: ${REDIS_IMAGE}
     ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
-      - 9229:9229
-    volumes:
-      - .:/usr/app
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "5"
-    links:
-      - database
-    depends_on:
-      - database
+      - ${REDIS_PORT}:6379
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+
+  # app:
+  #   container_name: api_rentx
+  #   build: .
+  #   restart: always
+  #   ports:
+  #     - ${SERVER_PORT}:${SERVER_PORT}
+  #     - 9229:9229
+  #   volumes:
+  #     - .:/usr/app
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "10m"
+  #       max-file: "5"
+  #   links:
+  #     - database
+  #   depends_on:
+  #     - database
 
 volumes:
   pgdata:

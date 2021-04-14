@@ -21,12 +21,17 @@ const upload = multer(uploadConfig.upload('avatar'))
 
 usersRouter.use(ensureAuthenticated)
 
-usersRouter.get('/profile', profileUserController.handle)
+usersRouter.get(
+  '/profile',
+  is(['ROLE_ADMIN', 'ROLE_USER']),
+  profileUserController.handle,
+)
 
 usersRouter.post('/create', is(['ROLE_ADMIN']), createUserController.handle)
 
 usersRouter.patch(
   '/avatar',
+  is(['ROLE_ADMIN', 'ROLE_USER']),
   upload.single('avatar'),
   updateUserAvatarController.handle,
 )
