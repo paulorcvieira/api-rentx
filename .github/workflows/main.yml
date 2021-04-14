@@ -41,7 +41,4 @@ jobs:
           port: ${{ secrets.SSH_PORT_RENTX }}
           key: ${{ secrets.SSH_KEY_RENTX }}
           script:
-            cd ~/deploy/api-rentx
-            yarn
-            ./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run
-            pm2 restart rentx_api
+            cd ~/deploy/api-rentx && yarn && ./node_modules/.bin/typeorm migration:run && pm2 restart rentx_api
