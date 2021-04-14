@@ -9,6 +9,7 @@ import uploadConfig from '@config/upload-config'
 import createConnection from '@shared/infra/typeorm'
 
 import generalException from './middlewares/generalException'
+import rateLimiter from './middlewares/rateLimiter'
 import { routes } from './routes'
 import swaggerFile from './swagger.json'
 
@@ -17,6 +18,8 @@ import '../../container'
 createConnection()
 
 const app = express()
+
+app.use(rateLimiter)
 
 app.use(cors())
 
