@@ -1,4 +1,4 @@
-# Rentalx Monorepo
+# RentX
 
 **Clone this repository**
 
