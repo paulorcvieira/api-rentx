@@ -24,11 +24,11 @@ jobs:
       - name: Build
         run: yarn build
         
-      - uses: deploy/scp-action@master
+      - uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST_RENTX }}
           username: ${{ secrets.SSH_USER_RENTX }}
           port: ${{ secrets.SSH_PORT_RENTX }}
           key: ${{ secrets.SSH_KEY_RENTX }}
           source: "., !node_modules"
-          target: "test"
+          target: "~/deploy/api-rentx"
