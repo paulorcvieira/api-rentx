@@ -8,13 +8,14 @@ import AppException from '@shared/exceptions/AppException'
 const redisClient = redis.createClient({
   host: process.env.REDIS_HOST,
   port: Number(process.env.REDIS_PORT),
+  auth_pass: process.env.REDIS_PASSWORD,
   enable_offline_queue: false,
 })
 
 const limiter = new RateLimiterRedis({
   storeClient: redisClient,
   keyPrefix: 'rateLimiter',
-  points: 10,
+  points: process.env.NODE_ENV === 'test' ? 1000 : 10,
   duration: 1,
 })
 
