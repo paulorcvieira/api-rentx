@@ -13,3 +13,4 @@ package-lock.json
 tmp/**/*
 !tmp/**/.gitkeep
 ormconfig.json
+ci.yml
