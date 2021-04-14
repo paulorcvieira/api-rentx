@@ -1,7 +1,10 @@
+import { classToClass } from 'class-transformer'
+import { StatusCodes } from 'http-status-codes'
 import { inject, injectable } from 'tsyringe'
 
-import { User } from '@modules/accounts/infra/typeorm/entities/User'
+import { IUserResponseDTO } from '@modules/accounts/dtos/IUserResponseDTO'
 import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository'
+import AppException from '@shared/exceptions/AppException'
 
 @injectable()
 export class ProfileUserUseCase {
@@ -9,8 +12,16 @@ export class ProfileUserUseCase {
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
   ) {}
-  public async execute(user_id: string): Promise<User | undefined> {
+  public async execute(user_id: string): Promise<IUserResponseDTO> {
     const user = await this.usersRepository.findById(user_id)
-    return user
+
+    if (!user) {
+      throw new AppException(
+        'This user does not registered.',
+        StatusCodes.NOT_FOUND,
+      )
+    }
+
+    return classToClass(user)
   }
 }
