@@ -16,9 +16,9 @@ services:
 
   redis:
     container_name: redis_rentx
-    image: redis:alpine
+    image: ${REDIS_IMAGE}
     ports:
-      - 6379:6379
+      - ${REDIS_PORT}:6379
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
