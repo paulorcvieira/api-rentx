@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: yarn build
         
-      - uses: app/scp-action@master
+      - uses: deploy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST_RENTX }}
           username: ${{ secrets.SSH_USER_RENTX }}
