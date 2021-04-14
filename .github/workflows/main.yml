@@ -43,5 +43,5 @@ jobs:
           script:
             cd ~/deploy/api-rentx
             yarn
-            ./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run
+            ./node_modules/.bin/typeorm migration:run
             pm2 restart rentx_api
