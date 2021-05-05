@@ -18,6 +18,7 @@
     "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli",
     "up": "npm run build && docker-compose up -d",
     "down": "docker-compose down",
+    "test:fast": "NODE_ENV=test jest --maxWorkers=50% --no-cache --detectOpenHandles --passWithNoTests",
     "test": "NODE_ENV=test jest --detectOpenHandles --passWithNoTests --runInBand --no-cache",
     "test:unit": "NODE_ENV=test npm test -- --watch -c jest-unit-config.ts",
     "test:integration": "NODE_ENV=test npm test -- --watch -c jest-integration-config.ts",
@@ -29,6 +30,9 @@
     "seed:admin": "tsnd src/shared/infra/typeorm/seeds/admin.ts",
     "clear": "jest --clearCache",
     "prepare": "husky install"
+  },
+  "engines": {
+    "node": "12.x"
   },
   "lint-staged": {
     "src/**/*": [
