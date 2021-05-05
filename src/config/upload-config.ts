@@ -29,16 +29,16 @@ const STORAGE_DRIVER = process.env.STORAGE_DRIVER || 'disk'
 export default {
   driver: STORAGE_DRIVER,
 
-  tmpFolder: resolve(__dirname, '..', '..', 'tmp'),
+  tmpFolder: resolve(__dirname, '..', '..', 'src', 'tmp'),
 
   folder: (folder: string) => {
-    return resolve(__dirname, '..', '..', 'tmp', folder)
+    return resolve(__dirname, '..', '..', 'src', 'tmp', folder)
   },
 
   upload: (folder: string) => {
     return {
       storage: multer.diskStorage({
-        destination: resolve(__dirname, '..', '..', 'tmp', folder),
+        destination: resolve(__dirname, '..', '..', 'src', 'tmp', folder),
         filename: (request, file, callback) => {
           const fileHash = crypto.randomBytes(16).toString('hex')
           const fileName = `${fileHash}-${file.originalname}`
