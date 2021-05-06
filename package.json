@@ -5,7 +5,8 @@
   "license": "MIT",
   "author": {
     "name": "Paulo Vieira",
-    "github": "https://github.com/paulorcvieira"
+    "github": "https://github.com/paulorcvieira",
+    "repositoty": "https://github.com/paulorcvieira/api-rentx"
   },
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
