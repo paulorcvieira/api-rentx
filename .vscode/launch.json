@@ -9,13 +9,22 @@
       "request": "attach",
       "protocol": "inspector",
       "restart": true,
-      "name": "Debug Server",
+      "name": "Local: Debug Server",
       "skipFiles": [
         "<node_internals>/**"
       ],
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Docker: Attach to Node",
+      "remoteRoot": "/user/app",
+      "port": 9229,
+      "restart": true,
+      "timeout": 10000
     }
   ]
 }

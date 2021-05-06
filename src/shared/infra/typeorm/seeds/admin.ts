@@ -4,21 +4,22 @@ import { v4 as uuidV4 } from 'uuid'
 import createConnection from '../index'
 
 const create = async () => {
-  const connection = await createConnection('localhost')
+  const connection = await createConnection('postgres')
 
   const permission_id = uuidV4()
   const role_id = uuidV4()
   const user_id = uuidV4()
   const password = await hash('admin', 8)
+  // $2b$08$P9GRDVvSqlJmOEZ78cpDhuEcZxK0dQfuYP/mQuMiokNdJB2znmRsi
 
   await connection.query(
     `INSERT INTO PERMISSIONS(id, name, description)
-      values(${permission_id}, 'create', 'anything')`,
+      values('${permission_id}', 'create', 'anything')`,
   )
 
   await connection.query(
     `INSERT INTO ROLES(id, name, description)
-      values(${role_id}, 'ROLE_ADMIN', 'Administrators')`,
+      values('${role_id}', 'ROLE_ADMIN', 'Administrators')`,
   )
 
   await connection.query(
@@ -40,5 +41,5 @@ const create = async () => {
 }
 
 create()
-  .then(() => console.log('Permission, Role and User admin created'))
+  .then(() => console.log('success: Permission, Role and User admin created'))
   .catch(error => console.error(error))
