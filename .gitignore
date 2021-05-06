@@ -14,3 +14,4 @@ tmp/**/*
 !tmp/**/.gitkeep
 ormconfig.json
 ci.yml
+data
